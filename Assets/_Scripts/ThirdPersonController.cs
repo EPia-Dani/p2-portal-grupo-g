@@ -43,6 +43,8 @@ public class ThirdPersonController : MonoBehaviour
     private float currentPitch = 0;
     private float currentYaw = 0;
 
+    private Animator m_Animator;
+
     void OnEnable()
     {
         //GameManager.OnPlayerRespawn += HandlePlayerRespawn; //per desactivar el movement un moment
@@ -54,6 +56,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         currentPitch = MPitchController.localRotation.eulerAngles.x;
         currentYaw = MPitchController.localRotation.eulerAngles.y;
+        m_Animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -89,6 +92,8 @@ public class ThirdPersonController : MonoBehaviour
         // MOVEMENT
         Vector3 movement = (transform.forward * mDirection.y + transform.right * mDirection.x) * speed * Time.deltaTime;
         _mCharacterController.Move(movement);
+        m_Animator.SetFloat("MovementX", mDirection.x);
+        m_Animator.SetFloat("MovementZ", mDirection.y);
 
         // JUMP
         //MRUA: y = y0 + v0*t + 0.5*a*t^2    (Physics.gravity millor que posar -9.81)
@@ -102,12 +107,12 @@ public class ThirdPersonController : MonoBehaviour
             mVerticalSpeed = 0;
 
         // SHOOT
-        /*
         if (isShooting && weapon != null)
         {
-            weapon.Shoot();
+            Debug.Log("Shooting");
+            //weapon.Shoot();
         }
-        */
+        
     }
 
     /*
@@ -137,11 +142,13 @@ public class ThirdPersonController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context){
         if (!IsGrounded || !context.performed) return;
+        m_Animator.SetTrigger("Jump");
         mVerticalSpeed = jumpSpeed;
         IsGrounded = false;
     }
 
     public void OnShoot(InputAction.CallbackContext context){
+        Debug.Log("OnShoot called");
         isShooting = context.performed && weapon != null;
     }
 
