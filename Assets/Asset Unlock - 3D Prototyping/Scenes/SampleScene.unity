@@ -1132,7 +1132,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 61a0a3aab1d103949b6b4b7d80f464ab, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 27d99bdb4cccdcb48b2f8d208a0c32ba, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -3748,7 +3748,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 27d99bdb4cccdcb48b2f8d208a0c32ba, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 61a0a3aab1d103949b6b4b7d80f464ab, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -5013,13 +5013,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486195604}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1798068244}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: -90}
 --- !u!1 &1510182884
 GameObject:
   m_ObjectHideFlags: 0
@@ -5329,13 +5329,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643260560}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5000008, y: -0.50000083, z: 0.49999923, w: -0.49999923}
+  m_LocalRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2141603888}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: -90}
 --- !u!64 &1643260562
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6180,7 +6180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1353341267}
   reflectionTransform: {fileID: 525808685}
-  reflectionCamera: {fileID: 431086870}
+  reflectionCamera: {fileID: 1284277274}
   mirrorPortal: {fileID: 2141603887}
   offsetNearPlane: 0
 --- !u!1001 &1842900973
@@ -6742,7 +6742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1353341267}
   reflectionTransform: {fileID: 1510182885}
-  reflectionCamera: {fileID: 1284277274}
+  reflectionCamera: {fileID: 431086870}
   mirrorPortal: {fileID: 1798068245}
   offsetNearPlane: 0
 --- !u!4 &2141603888

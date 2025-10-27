@@ -109,7 +109,6 @@ public class ThirdPersonController : MonoBehaviour
         // SHOOT
         if (isShooting && weapon != null)
         {
-            Debug.Log("Shooting");
             //weapon.Shoot();
         }
         
