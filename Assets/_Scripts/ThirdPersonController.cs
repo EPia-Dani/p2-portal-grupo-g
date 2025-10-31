@@ -35,7 +35,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private Weapon weapon;
     private bool isShooting = false;
 
-    private bool isRespawning = false;
+    //private bool isRespawning = false;
 
     [Range(-89, 89)] public float minPitch = -89;
     [Range(-89, 89)] public float maxPitch = 89;
@@ -163,14 +163,14 @@ public class ThirdPersonController : MonoBehaviour
 
     private void HandlePlayerRespawn()
     {
-        isRespawning = true;
+        //isRespawning = true;
         StartCoroutine(ResetRespawnVariable());
     }
 
     private IEnumerator ResetRespawnVariable()
     {
         yield return new WaitForSeconds(1f);
-        isRespawning = false;
+        //isRespawning = false;
     }
 
 

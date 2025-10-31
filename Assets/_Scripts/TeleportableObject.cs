@@ -25,7 +25,6 @@ public class TeleportableObject : MonoBehaviour
             Vector3 relativePos = inTransform.InverseTransformPoint(transform.position);
             relativePos = null;// todo
 
-           
         }
         */
     }
