@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cube
   - PlayerCamera
+  - Portal
   layers:
   - Default
   - TransparentFX

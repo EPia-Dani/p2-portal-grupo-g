@@ -124,6 +124,15 @@ public class ThirdPersonController : MonoBehaviour
         }
     }*/
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Portal"))
+        {
+            Portal portal = other.GetComponent<Portal>();
+            portal.teleportPlayer();
+        }
+    }
+
 
     /*
     Input Value: Per moviment continu, rotació de càmera, controls analògics
