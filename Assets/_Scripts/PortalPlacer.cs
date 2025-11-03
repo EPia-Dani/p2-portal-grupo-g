@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class PortalPlacer : MonoBehaviour
 {
-    /*
-    public Crosshair mCrosshair;
+    //public Crosshair mCrosshair;
     //list of 4 mcrosshair scripts
-    public Crosshair[] mCrosshairs = new Crosshair[4];
+    //public Crosshair[] mCrosshairs = new Crosshair[4];
     //public mhitmask
     public LayerMask mHitMask;
     //public portalslist (un gameobject amb array de portals)
@@ -35,8 +34,12 @@ public class PortalPlacer : MonoBehaviour
 
     void Update()
     {
+        //TODO input system
         if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Left click - shoot blue portal");
             TryShootPortal(PortalType.Blue);
+        }
 
         if (Input.GetMouseButtonDown(1))
             TryShootPortal(PortalType.Orange);
@@ -61,7 +64,7 @@ public class PortalPlacer : MonoBehaviour
                 portalRight = (portalRight.z >= 0) ? Vector3.forward : -Vector3.forward;
             }
 
-            var portalForward = hit.normal;
+            var portalForward = -hit.normal;
             var portalUp = -Vector3.Cross(portalRight, portalForward);
 
             var portalRotation = Quaternion.LookRotation(portalForward, portalUp);
@@ -79,7 +82,29 @@ public class PortalPlacer : MonoBehaviour
 
     private bool PlacePortal(GameObject portal, Collider wallCollider, Vector3 pos, Quaternion rot)
     {
-        return false;
+
+        //Comprovar que el portal no es col·lisiona amb res. LATER
+        //List<GameObject> validPoints = //child from portal named EmplacementPoints
+        //    new List<GameObject>();
+        //foreach(Transform child in portal.transform.Find("EmplacementPoints"))
+        //{
+        //    validPoints.Add(child.gameObject);
+        //}
+
+        //de moment permetrem col·locar el portal sempre
+        portal.transform.position = pos;
+        portal.transform.rotation = rot;
+        //una mica més endavant per evitar z-fighting
+        portal.transform.position += portal.transform.forward * -0.01f;
+
+
+
+        Debug.Log("Portal placed at " + pos + " with rotation " + rot.eulerAngles);
+
+    
+
+
+        return true;
     
 
     }
@@ -96,5 +121,4 @@ public class PortalPlacer : MonoBehaviour
                 return null;
         }
     }
-    */
 }
