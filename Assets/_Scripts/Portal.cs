@@ -28,21 +28,37 @@ public class Portal : MonoBehaviour
     }
 
 
-    public void teleportPlayer()
+    public void teleportPlayer(GameObject player)
     {
-        Debug.Log("teleporting");
 
-        /*
-         * Vector3 l_Position = _Portal.m_VirtualPortal.transform.InverseTransformPoint(transform.position);
-         * Vector3 l_Direction = _Portal.m_VirtualPortal.transform.InverseTransformDirection(-transform.forward);
-         * 
-         * transform.position = _Portal.m_MirrorPortal.transform.TransformPoint(l_Position);
-         * transform.forward = _Portal.m_MirrorPortal.transform.TransformDirection(l_Direction);
-         * 
-         * avanzar al player en dirección a su forward un offset determinado para que “atraviese” el portal y salga del trigger del otro portal
-         * actualizar el mYaw del player para mantener el forward asignado
-         */
+        if (mirrorPortal == null) //si no hay el otro portal spawneado
+        {
+            return;
+        }
 
+        ThirdPersonController fpc = player.GetComponent<ThirdPersonController>();
+        CharacterController cc = player.GetComponent<CharacterController>();
+        fpc.enabled = false;
+        cc.enabled = false; //disable update of position
+
+        //convert player position and direction into entering portal's local coords
+        Vector3 enterPosition = transform.InverseTransformPoint(player.transform.position);
+        Vector3 enterDirection = transform.InverseTransformDirection(player.transform.forward);
+        
+        Vector3 enterForward = transform.InverseTransformDirection(player.transform.forward);
+        Vector3 exitForward = mirrorPortal.transform.TransformDirection(new Vector3(-enterForward.x, enterForward.y, -enterForward.z));
+
+        Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
+        Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
+
+        //and convert to the other portal
+        player.transform.position = exitPosition;
+        player.transform.forward = exitDirection;
+        player.transform.position += mirrorPortal.transform.forward * -1.5f; //offset to not teleport infinetely
+        player.transform.rotation = Quaternion.LookRotation(exitForward, Vector3.up);
+
+        fpc.enabled = true;
+        cc.enabled = true; //enable character controller again
     }
 
 

@@ -129,7 +129,7 @@ public class ThirdPersonController : MonoBehaviour
         if (other.CompareTag("Portal"))
         {
             Portal portal = other.GetComponent<Portal>();
-            portal.teleportPlayer();
+            portal.teleportPlayer(this.gameObject);
         }
     }
 
