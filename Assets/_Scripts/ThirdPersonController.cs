@@ -156,7 +156,6 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     public void OnShoot(InputAction.CallbackContext context){
-        Debug.Log("OnShoot called");
         isShooting = context.performed && weapon != null;
     }
 
