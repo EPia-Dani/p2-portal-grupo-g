@@ -7676,6 +7676,11 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 183
       objectReference: {fileID: 0}
+    - target: {fileID: 345804167882498690, guid: feea2d82a0fb56341adf72c78178cf00,
+        type: 3}
+      propertyPath: mPortalsList
+      value: 
+      objectReference: {fileID: 1713203778}
     - target: {fileID: 967288202643020909, guid: feea2d82a0fb56341adf72c78178cf00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7734,11 +7739,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3879209107856321148, guid: feea2d82a0fb56341adf72c78178cf00,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1618119704}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: feea2d82a0fb56341adf72c78178cf00, type: 3}
 --- !u!1 &1057211237
 GameObject:
@@ -8444,12 +8445,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1189765779 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 177195277610605055, guid: feea2d82a0fb56341adf72c78178cf00,
-    type: 3}
-  m_PrefabInstance: {fileID: 1053481567}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1195148540
 GameObject:
   m_ObjectHideFlags: 0
@@ -9945,30 +9940,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1618119699 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3879209107856321148, guid: feea2d82a0fb56341adf72c78178cf00,
-    type: 3}
-  m_PrefabInstance: {fileID: 1053481567}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1618119704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618119699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd23b985a1869f64eaf7da0be91e3044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mHitMask:
-    serializedVersion: 2
-    m_Bits: 128
-  mPortalsList: {fileID: 1713203778}
-  mTimeToRecoil: 0.5
-  mCamera: {fileID: 1189765779}
 --- !u!1 &1713203778 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6540283359226417751, guid: 9abcd2217c836284cb1b9b3cb5ca05d8,
