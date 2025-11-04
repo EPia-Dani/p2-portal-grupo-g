@@ -1,13 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PortalPlacer : MonoBehaviour
 {
     //public Crosshair mCrosshair;
     //list of 4 mcrosshair scripts
     //public Crosshair[] mCrosshairs = new Crosshair[4];
-    //public mhitmask
-    public LayerMask mHitMask;
-    //public portalslist (un gameobject amb array de portals)
+
+    public LayerMask mHitMask; //la layer PortalWall
     public GameObject mPortalsList;
 
     public float mTimeToRecoil = 0.5f;
@@ -82,31 +82,75 @@ public class PortalPlacer : MonoBehaviour
 
     private bool PlacePortal(GameObject portal, Collider wallCollider, Vector3 pos, Quaternion rot)
     {
+        // Guardem per si no és vàlid tornar a col·locar
+        Vector3 originalPos = portal.transform.position;
+        Quaternion originalRot = portal.transform.rotation;
 
-        //Comprovar que el portal no es col·lisiona amb res. LATER
-        //List<GameObject> validPoints = //child from portal named EmplacementPoints
-        //    new List<GameObject>();
-        //foreach(Transform child in portal.transform.Find("EmplacementPoints"))
-        //{
-        //    validPoints.Add(child.gameObject);
-        //}
+        // Movem temporalment el portal per fer la comprovació dels punts
+        portal.transform.SetPositionAndRotation(pos, rot);
 
-        //de moment permetrem col·locar el portal sempre
-        portal.transform.position = pos;
-        portal.transform.rotation = rot;
-        //una mica més endavant per evitar z-fighting
+        bool valid = true;
+
+        foreach (Transform child in portal.transform.Find("EmplacementPoints"))
+        {
+            // Raycast des de cada punt fins la paret
+            Ray ray = new Ray(child.position - portal.transform.forward * 0.1f, portal.transform.forward);
+            RaycastHit hit;
+
+            Debug.DrawRay(ray.origin, ray.direction * 0.5f, Color.green, 3f);
+
+            if (Physics.Raycast(ray, out hit, 0.5f))
+            {
+                Debug.Log($"Hit {hit.collider.name} on layer {hit.collider.gameObject.layer} ({LayerMask.LayerToName(hit.collider.gameObject.layer)})");
+                if(hit.collider.CompareTag("Portal")) //evita col·locar portals un sobre l'altre
+                {
+                    string hitName = hit.collider.name.ToLower();
+                    string myName = portal.name.ToLower();
+
+                    if ((hitName.Contains("blue") && myName.Contains("blue")) ||
+                        (hitName.Contains("orange") && myName.Contains("orange")))
+                    {
+                        Debug.Log("Overwriting same-colored portal position." + hit.collider.name + " with " + portal.name);
+                        continue; //se sobreescriu el portal si és el mateix color
+                    }
+                    else
+                    {
+                        // Si és un altre portal, no vàlid
+                        Debug.Log("Cannot place portal on the opposite portal!" + hit.collider.name + " with " + portal.name);
+                        valid = false;
+                        break;
+                    }
+    
+                }
+
+                // Comprova que sigui una superfície vàlida
+                if ((mHitMask.value & (1 << hit.collider.gameObject.layer)) == 0)
+                {
+                    Debug.Log("Invalid surface at point: " + child.name);
+                    valid = false;
+                    break;
+                }
+            }
+            else
+            {
+                Debug.Log("No hit detected at point: " + child.name);
+                valid = false;
+                break;
+            }
+        }
+
+        if (!valid)
+        {
+            portal.transform.SetPositionAndRotation(originalPos, originalRot);
+            Debug.Log("Portal placement invalid — reverting position");
+            return false;
+        }
+
+        // Si és vàlid, tirem endavant (per evitar z-fighting)
         portal.transform.position += portal.transform.forward * -0.01f;
 
-
-
-        Debug.Log("Portal placed at " + pos + " with rotation " + rot.eulerAngles);
-
-    
-
-
+        Debug.Log("Portal placed successfully at " + pos + " with rotation " + rot.eulerAngles);
         return true;
-    
-
     }
 
     private GameObject GetPortal(PortalType portal)
