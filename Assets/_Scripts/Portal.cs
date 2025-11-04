@@ -36,6 +36,8 @@ public class Portal : MonoBehaviour
             return;
         }
 
+        Debug.Log("teleporting");
+
         ThirdPersonController fpc = player.GetComponent<ThirdPersonController>();
         CharacterController cc = player.GetComponent<CharacterController>();
         fpc.enabled = false;
@@ -44,9 +46,6 @@ public class Portal : MonoBehaviour
         //convert player position and direction into entering portal's local coords
         Vector3 enterPosition = transform.InverseTransformPoint(player.transform.position);
         Vector3 enterDirection = transform.InverseTransformDirection(player.transform.forward);
-        
-        Vector3 enterForward = transform.InverseTransformDirection(player.transform.forward);
-        Vector3 exitForward = mirrorPortal.transform.TransformDirection(new Vector3(-enterForward.x, enterForward.y, -enterForward.z));
 
         Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
         Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
@@ -55,7 +54,6 @@ public class Portal : MonoBehaviour
         player.transform.position = exitPosition;
         player.transform.forward = exitDirection;
         player.transform.position += mirrorPortal.transform.forward * -1.5f; //offset to not teleport infinetely
-        player.transform.rotation = Quaternion.LookRotation(exitForward, Vector3.up);
 
         fpc.enabled = true;
         cc.enabled = true; //enable character controller again
