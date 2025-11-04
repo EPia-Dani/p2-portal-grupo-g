@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class TeleportableObject : MonoBehaviour
+public interface TeleportableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    /*
     void Start()
     {
         
@@ -11,7 +12,6 @@ public class TeleportableObject : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {   
-        /*
         if(inPortal == null || outPortal == null)
         {
             return;
@@ -26,6 +26,7 @@ public class TeleportableObject : MonoBehaviour
             relativePos = null;// todo
 
         }
-        */
     }
+    */
+
 }

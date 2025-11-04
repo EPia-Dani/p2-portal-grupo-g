@@ -4,7 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ThirdPersonController : MonoBehaviour
+public class ThirdPersonController : MonoBehaviour, TeleportableObject
 {
 
     [Header("References")]
@@ -124,15 +124,6 @@ public class ThirdPersonController : MonoBehaviour
         }
     }*/
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Portal"))
-        {
-            Portal portal = other.GetComponent<Portal>();
-            portal.teleportPlayer(this.gameObject);
-        }
-    }
-
 
     /*
     Input Value: Per moviment continu, rotació de càmera, controls analògics
@@ -140,6 +131,18 @@ public class ThirdPersonController : MonoBehaviour
 
     No es poden fer servir els dos alhora perquè InputValue necessita que el PlayerInput sigui Send Messages i CallbackContext necessita que sigui InvokeEvents.
     */
+
+    public void setRotation(Vector3 yaw, Vector3 pitch)
+    {
+        currentYaw = Mathf.Atan2(yaw.x, yaw.z) * Mathf.Rad2Deg;
+
+        currentPitch = Mathf.Asin(pitch.y) * Mathf.Rad2Deg;
+        currentPitch = Mathf.Clamp(currentPitch, minPitch, maxPitch);
+    }
+
+    public float getYaw() { return currentYaw;}
+    public float getPitch() { return currentPitch;}
+
     public void OnMove(InputAction.CallbackContext context){
         mDirection = context.ReadValue<Vector2>();
     }
@@ -180,6 +183,7 @@ public class ThirdPersonController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //isRespawning = false;
     }
+
 
 
     /*

@@ -151,8 +151,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99545145, y: 1.6627569, z: 0.14123364}
-  m_Center: {x: 0.0022742748, y: 0.19727373, z: -0.04}
+  m_Size: {x: 0.99545145, y: 1.6627569, z: 0.05}
+  m_Center: {x: 0.0022742748, y: 0.19727373, z: -0.1273379}
 --- !u!114 &8013647858532977979 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4760297275992323309, guid: 866a5c236755da9408a1dede53fba213,
@@ -307,5 +307,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99545145, y: 1.6627569, z: 0.17998886}
-  m_Center: {x: 0.0022742748, y: 0.19727373, z: -0.04}
+  m_Size: {x: 0.99545145, y: 1.6627569, z: 0.05}
+  m_Center: {x: 0.0022742748, y: 0.19727373, z: -0.12733795}
