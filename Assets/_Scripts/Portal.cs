@@ -74,7 +74,7 @@ public class Portal : MonoBehaviour
         //and convert to the other portal
         player.transform.position = exitPosition;
         player.transform.forward = exitDirection;
-        player.transform.position += mirrorPortal.transform.forward * -0.5f; //offset to not teleport infinetely
+        player.transform.position += mirrorPortal.transform.forward * -0.1f; //offset to not teleport infinetely
 
         //override rotation from fpc
         Vector3 flatForward = exitDirection;
