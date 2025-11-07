@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5052490897851110997}
   m_Layer: 0
   m_Name: Portals
-  m_TagString: Untagged
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,6 +41,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5052490897851110997}
     m_Modifications:
+    - target: {fileID: 583609783726072954, guid: 866a5c236755da9408a1dede53fba213,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.051
+      objectReference: {fileID: 0}
     - target: {fileID: 1184464800446196742, guid: 866a5c236755da9408a1dede53fba213,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -49,7 +54,7 @@ PrefabInstance:
     - target: {fileID: 1184464800446196742, guid: 866a5c236755da9408a1dede53fba213,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.705
+      value: 2.205
       objectReference: {fileID: 0}
     - target: {fileID: 1184464800446196742, guid: 866a5c236755da9408a1dede53fba213,
         type: 3}
@@ -101,12 +106,32 @@ PrefabInstance:
       propertyPath: reflectionCamera
       value: 
       objectReference: {fileID: 629389040824576424}
+    - target: {fileID: 5092592345885601417, guid: 866a5c236755da9408a1dede53fba213,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5754008787891900426, guid: 866a5c236755da9408a1dede53fba213,
         type: 3}
       propertyPath: m_Name
       value: PortalOrange
       objectReference: {fileID: 0}
     - target: {fileID: 5754008787891900426, guid: 866a5c236755da9408a1dede53fba213,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754008787891900426, guid: 866a5c236755da9408a1dede53fba213,
+        type: 3}
+      propertyPath: m_TagString
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6339246134483562750, guid: 866a5c236755da9408a1dede53fba213,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6339246134483562750, guid: 866a5c236755da9408a1dede53fba213,
         type: 3}
       propertyPath: m_TagString
       value: Portal
@@ -151,8 +176,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99545145, y: 1.6627569, z: 0.06}
-  m_Center: {x: 0.0022742748, y: 0.19727373, z: -0.05}
+  m_Size: {x: 0.99545145, y: 1.6783333, z: 0.06}
+  m_Center: {x: 0.0022742748, y: 0.024087667, z: -0.05}
 --- !u!114 &8013647858532977979 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4760297275992323309, guid: 866a5c236755da9408a1dede53fba213,
@@ -196,6 +221,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1248850076337216769, guid: 691dcc12e6afcf84d917b2377e80b82a,
         type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248850076337216769, guid: 691dcc12e6afcf84d917b2377e80b82a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398584241770897595, guid: 691dcc12e6afcf84d917b2377e80b82a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398584241770897595, guid: 691dcc12e6afcf84d917b2377e80b82a,
+        type: 3}
       propertyPath: m_TagString
       value: Portal
       objectReference: {fileID: 0}
@@ -207,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 4033198151739645202, guid: 691dcc12e6afcf84d917b2377e80b82a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.28
+      value: 2.34
       objectReference: {fileID: 0}
     - target: {fileID: 4033198151739645202, guid: 691dcc12e6afcf84d917b2377e80b82a,
         type: 3}
@@ -307,5 +347,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99545145, y: 1.6627569, z: 0.06}
-  m_Center: {x: 0.0022742748, y: 0.19727373, z: -0.05}
+  m_Size: {x: 0.99545145, y: 1.6985823, z: 0.06}
+  m_Center: {x: 0.0022742748, y: 0.035787046, z: -0.03999999}
