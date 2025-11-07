@@ -8,15 +8,43 @@ public class AttachObject : MonoBehaviour
     private bool m_AttachedObject=false;
     private Quaternion m_AttachingObjectStartRotation;
 
+    private bool hasObject;
+
     void Start()
     {
         m_AttachingObjectStartRotation=m_ObjectAttached.rotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        UpdateAttachedObject();
+        //TODO: Input system
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            if(!hasObject)
+            {
+                //TODO: check distance and raycast to cube
+                hasObject=true;
+                m_AttachedObject=false;
+                m_ObjectAttached.isKinematic=true;
+                m_ObjectAttached.useGravity=false;
+            }
+            else
+            {
+                //Llançar l'objecte endavant
+                hasObject=false;
+                m_ObjectAttached.isKinematic=false;
+                m_ObjectAttached.useGravity=true;
+                m_ObjectAttached.AddForce(m_AttachingPosition.forward*40.0f);
+            }
+        }
+        if(Input.GetMouseButtonDown(1) && hasObject)
+        {
+            hasObject=false;
+            m_ObjectAttached.isKinematic=false;
+            m_ObjectAttached.useGravity=true;
+        }
+        if(hasObject)
+            UpdateAttachedObject();
     }
 
     void UpdateAttachedObject()
@@ -30,7 +58,7 @@ public class AttachObject : MonoBehaviour
 
             if(l_Movement>=l_Distance)
             {
-                //m_AttachedObject=true;
+                m_AttachedObject=true;
                 m_ObjectAttached.MovePosition(m_AttachingPosition.position);
                 m_ObjectAttached.MoveRotation(Quaternion.Euler(0.0f, l_EulerAngles.y, l_EulerAngles.z));
             }

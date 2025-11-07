@@ -181,6 +181,16 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 54089449008270882, guid: 9eddf26057390cb40a4f054ef935c559,
+        type: 3}
+      propertyPath: m_ImplicitTensor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54089449008270882, guid: 9eddf26057390cb40a4f054ef935c559,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7925,7 +7935,7 @@ PrefabInstance:
     - target: {fileID: 1731730391597929388, guid: feea2d82a0fb56341adf72c78178cf00,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.66
+      value: 3.47
       objectReference: {fileID: 0}
     - target: {fileID: 3879209107856321148, guid: feea2d82a0fb56341adf72c78178cf00,
         type: 3}
