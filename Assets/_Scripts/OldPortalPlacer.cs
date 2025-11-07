@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PortalPlacer : MonoBehaviour
+public class OldPortalPlacer : MonoBehaviour //SCRIPT PER GUARDAR EL PUNT ON FUNCIONA ABANS DE FER EL PREVISUALITZADOR. Amb tot de comentaris que a l'altre estan esborats
 {
+    
     //public Crosshair mCrosshair;
     //list of 4 mcrosshair scripts
     //public Crosshair[] mCrosshairs = new Crosshair[4];
@@ -26,9 +27,6 @@ public class PortalPlacer : MonoBehaviour
 
     private PortalType mOpenPortal = PortalType.None;
 
-
-    private bool isPreviewing = false;
-
     void Awake()
     {
         portalRight = mPortalsList.transform.Find("PortalOrange").GetComponent<Portal>();
@@ -38,20 +36,14 @@ public class PortalPlacer : MonoBehaviour
     void Update()
     {
         //TODO input system
-        if (Input.GetMouseButtonDown(0) && !isPreviewing)
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Left click - shoot blue portal");
-            //StartPreviewPortal(PortalType.Blue);
             TryShootPortal(PortalType.Blue);
         }
 
-        if (Input.GetMouseButtonDown(1) && !isPreviewing)
-        {
-            //StartPreviewPortal(PortalType.Orange);
+        if (Input.GetMouseButtonDown(1))
             TryShootPortal(PortalType.Orange);
-        }
-
-        
     }
 
 
@@ -68,7 +60,32 @@ public class PortalPlacer : MonoBehaviour
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Portal"))
                 {
-                    //TODO si cal, de moment no
+                    //Debug.Log("Hit a Portal, de moment bé.");
+                    /* descomentar això i arreglar-ho si volem fer-ho encara millor, però de moment funciona ja
+                    //tirem un altre raycast des de la posició del portal que hem tocat
+                    Ray portalRay = new Ray(hit.point + ray.direction * 0.01f, ray.direction);
+                    Debug.DrawRay(portalRay.origin, portalRay.direction * 10.0f, Color.green, 10.0f);
+                    RaycastHit portalHit;
+                    if (Physics.Raycast(portalRay, out portalHit, 10.0f))
+                    {
+                        bool isValid = (mHitMask.value & (1 << portalHit.collider.gameObject.layer)) != 0;
+                        if (isValid)
+                        {
+                            hit = portalHit; //actualitzem el hit per col·locar el portal a la nova posició
+                        }
+                        else
+                        {
+                            Debug.Log("Hit invalid surface after passing through a Portal — cannot place portal.");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("No valid hit after passing through a Portal — cannot place portal.");
+                        return;
+                    }
+                    */
+
                 }
                 else
                 {
