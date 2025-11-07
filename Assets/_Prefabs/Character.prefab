@@ -284,7 +284,7 @@ Transform:
   m_GameObject: {fileID: 1179504127306672646}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8.76}
+  m_LocalPosition: {x: 0, y: 0, z: 3.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1305,6 +1305,7 @@ GameObject:
   - component: {fileID: 3998296908908739244}
   - component: {fileID: 5402206419237377103}
   - component: {fileID: 345804167882498690}
+  - component: {fileID: 9155839457847228774}
   m_Layer: 9
   m_Name: Character
   m_TagString: Untagged
@@ -1494,6 +1495,21 @@ MonoBehaviour:
   mPortalsList: {fileID: 0}
   mTimeToRecoil: 0.5
   mCamera: {fileID: 177195277610605055}
+--- !u!114 &9155839457847228774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879209107856321148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94881367543d1534a9dc02e943891875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AttachingPosition: {fileID: 1731730391597929388}
+  m_ObjectAttached: {fileID: 0}
+  m_AttachingObjectSpeed: 20
 --- !u!1 &3975315684693526764
 GameObject:
   m_ObjectHideFlags: 0
