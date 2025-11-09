@@ -40,15 +40,31 @@ public class Portal : MonoBehaviour
                 switch (other.tag)
                 {
                     case "Player":
-                        Debug.Log("Teleporting player");
+                        //Debug.Log("Teleporting player");
                         teleportPlayer(other.gameObject);
                         break;
                     case "Cube":
-                        //todo cube tp -resize too-
+                        Debug.Log("Teleporting cube");
+                        teleportCube(other.gameObject);
                         break;
                 }
             }
         }
+    }
+
+
+    private void teleportCube(GameObject cube)
+    {
+        /*
+         *  Solo permitiermos que se teletransporte cuando no lo estemos llevando, por lo que tendremos que comprobar esa condición
+         *  
+         *  mover e orientar el objeto igual que al player,
+         *  tendremos que modificarle la velocidad y la escala del objeto para orientarlo en la dirección del portal y para que le afecte el factor de escala entre los dos portales
+         * 
+         * Vector3 l_Velocity=_Portal.m_VirtualPortal.transform.InverseTransformDirection(l_Rigidbody.velocity);
+         * l_Rigidbody.velocity = _Portal.m_MirrorPortal.transform.TransformDirection(l_Velocity);
+         * transform.localScale *= (_Portal.m_MirrorPortal.transform.localScale.x/_Portal.transform.localScale.x);
+         */
     }
 
 
