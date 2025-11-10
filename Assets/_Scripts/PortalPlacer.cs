@@ -13,8 +13,8 @@ public class PortalPlacer : MonoBehaviour
     public float mTimeToRecoil = 0.5f;
 
     public Camera mCamera;
-    private Portal portalRight;
-    private Portal portalLeft;
+    private Portal portalOrange;
+    private Portal portalBlue;
 
     [System.Flags]
     private enum PortalType
@@ -31,8 +31,8 @@ public class PortalPlacer : MonoBehaviour
 
     void Awake()
     {
-        portalRight = mPortalsList.transform.Find("PortalOrange").GetComponent<Portal>();
-        portalLeft = mPortalsList.transform.Find("PortalBlue").GetComponent<Portal>();
+        portalOrange = mPortalsList.transform.Find("PortalOrange").GetComponent<Portal>();
+        portalBlue = mPortalsList.transform.Find("PortalBlue").GetComponent<Portal>();
     }
 
     void Update()
@@ -174,7 +174,6 @@ public class PortalPlacer : MonoBehaviour
         // Si és vàlid, tirem endavant (per evitar z-fighting)
         portal.transform.position += portal.transform.forward * -0.01f;
 
-
         //Debug.Log("Portal placed successfully at " + pos + " with rotation " + rot.eulerAngles);
         return true;
     }
@@ -184,9 +183,9 @@ public class PortalPlacer : MonoBehaviour
         switch (portal)
         {
             case PortalType.Blue:
-                return portalLeft.gameObject;
+                return portalBlue.gameObject;
             case PortalType.Orange:
-                return portalRight.gameObject;
+                return portalOrange.gameObject;
             default:
                 return null;
         }

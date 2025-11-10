@@ -18,7 +18,15 @@ public class pressureButton : MonoBehaviour
     {
         if (other.gameObject.tag == "Cube")
         {
-            Debug.Log("Cube pressing");
+            Debug.Log("Cube pressing the button...");
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Cube")
+        {
+            Debug.Log("No more pressing the button...");
         }
     }
 

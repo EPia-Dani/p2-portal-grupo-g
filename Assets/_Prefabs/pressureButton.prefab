@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2667821471514801571}
   - component: {fileID: 2667821471517701509}
   - component: {fileID: 2667821471516702533}
+  - component: {fileID: 9163071244170115535}
   m_Layer: 0
   m_Name: Stm_button02
   m_TagString: Untagged
@@ -86,6 +87,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9163071244170115535
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2667821471514700163}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 63.606297, y: 17.709475, z: 63.5883}
+  m_Center: {x: -0.005150507, y: 0.2476131, z: 0.019249147}
 --- !u!1 &2667821471514700165
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2667821471514700167}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.358477, y: 0.078050256, z: 2.06}
   m_LocalScale: {x: 0.016213182, y: 0.016213182, z: 0.016213182}
   m_ConstrainProportionsScale: 0
@@ -226,8 +248,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 62.785057, y: 22.819826, z: 70.01534}
-  m_Center: {x: -0.30802312, y: 10.909921, z: 0.8718621}
+  m_Size: {x: 62.785057, y: 9.145016, z: 70.01534}
+  m_Center: {x: -0.30802312, y: 14.112292, z: 0.8718621}
 --- !u!114 &8275456273902908211
 MonoBehaviour:
   m_ObjectHideFlags: 0

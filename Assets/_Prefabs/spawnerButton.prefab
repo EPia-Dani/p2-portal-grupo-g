@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6754611695155061180}
   - component: {fileID: 174876434183550232}
   - component: {fileID: 1084682120517035960}
+  - component: {fileID: 8108846953885979046}
   m_Layer: 0
   m_Name: Stm_button02
   m_TagString: Untagged
@@ -86,6 +87,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8108846953885979046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920289425076832389}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 63.606297, y: 12.907789, z: 63.5883}
+  m_Center: {x: -0.005150507, y: 3.4403582, z: 0.019249147}
 --- !u!1 &4362517330546893313
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,8 +162,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 62.785057, y: 22.819826, z: 70.01534}
-  m_Center: {x: -0.30802312, y: 10.909921, z: 0.8718621}
+  m_Size: {x: 62.785057, y: 14, z: 70.01534}
+  m_Center: {x: -0.30802312, y: 20.445528, z: 0.8718621}
 --- !u!114 &849243376817167315
 MonoBehaviour:
   m_ObjectHideFlags: 0

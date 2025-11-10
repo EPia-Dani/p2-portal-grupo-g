@@ -9,6 +9,8 @@ public class Portal : MonoBehaviour
     public Camera reflectionCamera;
     public Portal mirrorPortal;
     public float offsetNearPlane;
+    
+    private bool canTp = true;
 
     void Start()
     {
@@ -40,12 +42,13 @@ public class Portal : MonoBehaviour
                 switch (other.tag)
                 {
                     case "Player":
-                        //Debug.Log("Teleporting player");
-                        teleportPlayer(other.gameObject);
+                        if (canTp)
+                        {
+                            StartCoroutine(waitTeleport(other.gameObject));
+                        }
                         break;
                     case "Cube":
-                        Debug.Log("Teleporting cube");
-                        teleportCube(other.gameObject);
+                        StartCoroutine(teleportCube(other.gameObject));
                         break;
                 }
             }
@@ -53,8 +56,11 @@ public class Portal : MonoBehaviour
     }
 
 
-    private void teleportCube(GameObject cube)
+    private IEnumerator teleportCube(GameObject cube)
     {
+        Debug.Log("Teleporting cube");
+        yield return new WaitForSeconds(1f);
+
         /*
          *  Solo permitiermos que se teletransporte cuando no lo estemos llevando, por lo que tendremos que comprobar esa condición
          *  
@@ -67,7 +73,6 @@ public class Portal : MonoBehaviour
          */
     }
 
-
     private void teleportPlayer(GameObject player)
     {
         ThirdPersonController fpc = player.GetComponent<ThirdPersonController>();
@@ -78,30 +83,42 @@ public class Portal : MonoBehaviour
         fpc.enabled = false;
         cc.enabled = false; //disable update of player
 
-
         //convert player position and direction into entering portal's local coords
         Vector3 enterPosition = transform.InverseTransformPoint(player.transform.position);
         Vector3 enterDirection = transform.InverseTransformDirection(player.transform.forward);
 
         Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
         Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
-        
+
 
         //and convert to the other portal
         player.transform.position = exitPosition;
         player.transform.forward = exitDirection;
-        player.transform.position += mirrorPortal.transform.forward * -0.1f; //offset to not teleport infinetely
+        player.transform.position += mirrorPortal.transform.forward * -0.2f; //offset to not teleport infinetely
 
         //override rotation from fpc
         Vector3 flatForward = exitDirection;
         flatForward.y = 0;
         fpc.setRotation(flatForward, exitDirection);
-        
+
         player.transform.rotation = Quaternion.Euler(0, fpc.getYaw(), 0);
         MPitchController.localRotation = Quaternion.Euler(fpc.getPitch(), 0, 0);
 
         fpc.enabled = true;
         cc.enabled = true; //enable character controller again
+    }
+
+    private IEnumerator waitTeleport(GameObject player)
+    {
+        canTp = false;
+        mirrorPortal.canTp = false;
+
+        Debug.Log("Teleporting player");
+        teleportPlayer(player);
+
+        yield return new WaitForSeconds(1f);
+        canTp = true;
+        mirrorPortal.canTp = true;
     }
 
 
