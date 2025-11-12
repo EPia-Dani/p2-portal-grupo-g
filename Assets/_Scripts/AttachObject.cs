@@ -10,11 +10,6 @@ public class AttachObject : MonoBehaviour
 
     private bool hasObject;
 
-    void Start()
-    {
-        m_AttachingObjectStartRotation=m_ObjectAttached.rotation;
-    }
-
     void Update()
     {
         //TODO: Input system
@@ -23,10 +18,12 @@ public class AttachObject : MonoBehaviour
             if(!hasObject)
             {
                 //TODO: check distance and raycast to cube
-                hasObject=true;
-                m_AttachedObject=false;
-                m_ObjectAttached.isKinematic=true;
-                m_ObjectAttached.useGravity=false;
+                if (GrabObject()){
+                    hasObject=true;
+                    m_AttachedObject=false;
+                    m_ObjectAttached.isKinematic=true;
+                    m_ObjectAttached.useGravity=false;
+                }
             }
             else
             {
@@ -35,6 +32,7 @@ public class AttachObject : MonoBehaviour
                 m_ObjectAttached.isKinematic=false;
                 m_ObjectAttached.useGravity=true;
                 m_ObjectAttached.AddForce(m_AttachingPosition.forward*40.0f);
+                m_ObjectAttached = null;
             }
         }
         if(Input.GetMouseButtonDown(1) && hasObject)
@@ -42,6 +40,7 @@ public class AttachObject : MonoBehaviour
             hasObject=false;
             m_ObjectAttached.isKinematic=false;
             m_ObjectAttached.useGravity=true;
+            m_ObjectAttached = null;
         }
         if(hasObject)
             UpdateAttachedObject();
@@ -49,6 +48,7 @@ public class AttachObject : MonoBehaviour
 
     void UpdateAttachedObject()
     {
+        //TODO: change this to add force instead of move position so it interacts with walls and floors well
         Vector3 l_EulerAngles=m_AttachingPosition.rotation.eulerAngles;
         if(!m_AttachedObject)
         {
@@ -74,6 +74,23 @@ public class AttachObject : MonoBehaviour
             m_ObjectAttached.MoveRotation(Quaternion.Euler(0.0f, l_EulerAngles.y, l_EulerAngles.z));
             m_ObjectAttached.MovePosition(m_AttachingPosition.position);
         }
+    }
+
+    bool GrabObject()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 3.0f))
+        {
+            Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
+            if (rb != null && (rb.gameObject.CompareTag("Cube") || rb.gameObject.CompareTag("Enemy")))
+            {
+                m_ObjectAttached = rb;
+                m_AttachingObjectStartRotation=m_ObjectAttached.rotation;
+                return true;
+            }
+        }
+        return false;
     }
 }
 
