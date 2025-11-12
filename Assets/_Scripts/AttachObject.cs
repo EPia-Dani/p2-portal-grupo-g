@@ -4,7 +4,10 @@ public class AttachObject : MonoBehaviour
 {
     public Transform m_AttachingPosition;
     public Rigidbody m_ObjectAttached;
-    public float m_AttachingObjectSpeed=5.0f;
+    public float springStrength = 60f; //com més gran, més ràpid s'acosta a la posició
+    public float damping = 30f; //com més gran, més suau és el moviment
+    public float maxSpeed = 5f;
+    public float m_StopDistance = 0.25f;
     private bool m_AttachedObject=false;
     private Quaternion m_AttachingObjectStartRotation;
 
@@ -17,12 +20,13 @@ public class AttachObject : MonoBehaviour
         {
             if(!hasObject)
             {
-                //TODO: check distance and raycast to cube
                 if (GrabObject()){
                     hasObject=true;
                     m_AttachedObject=false;
-                    m_ObjectAttached.isKinematic=true;
+                    m_ObjectAttached.isKinematic=false;
                     m_ObjectAttached.useGravity=false;
+                    m_ObjectAttached.linearVelocity = Vector3.zero;
+                    m_ObjectAttached.angularVelocity = Vector3.zero;
                 }
             }
             else
@@ -31,7 +35,7 @@ public class AttachObject : MonoBehaviour
                 hasObject=false;
                 m_ObjectAttached.isKinematic=false;
                 m_ObjectAttached.useGravity=true;
-                m_ObjectAttached.AddForce(m_AttachingPosition.forward*40.0f);
+                m_ObjectAttached.AddForce(m_AttachingPosition.forward*70.0f);
                 m_ObjectAttached = null;
             }
         }
@@ -48,39 +52,43 @@ public class AttachObject : MonoBehaviour
 
     void UpdateAttachedObject()
     {
-        //TODO: change this to add force instead of move position so it interacts with walls and floors well
-        Vector3 l_EulerAngles=m_AttachingPosition.rotation.eulerAngles;
-        if(!m_AttachedObject)
-        {
-            Vector3 l_Direction=m_AttachingPosition.transform.position-m_ObjectAttached.transform.position;
-            float l_Distance=l_Direction.magnitude;
-            float l_Movement=m_AttachingObjectSpeed*Time.deltaTime;
+        if (m_ObjectAttached == null) return;
 
-            if(l_Movement>=l_Distance)
-            {
-                m_AttachedObject=true;
-                m_ObjectAttached.MovePosition(m_AttachingPosition.position);
-                m_ObjectAttached.MoveRotation(Quaternion.Euler(0.0f, l_EulerAngles.y, l_EulerAngles.z));
-            }
-            else
-            {
-                l_Direction/=l_Distance;
-                m_ObjectAttached.MovePosition(m_ObjectAttached.transform.position+l_Direction*l_Movement);
-                m_ObjectAttached.MoveRotation(Quaternion.Lerp(m_AttachingObjectStartRotation, Quaternion.Euler(0.0f, l_EulerAngles.y, l_EulerAngles.z), 1.0f-Mathf.Min(l_Distance/1.5f, 1.0f)));
-            }
-        }
-        else
+        Vector3 targetPos = m_AttachingPosition.position;
+        Vector3 toTarget = targetPos - m_ObjectAttached.position;
+        float distance = toTarget.magnitude;
+
+        if (!m_AttachedObject)
         {
-            m_ObjectAttached.MoveRotation(Quaternion.Euler(0.0f, l_EulerAngles.y, l_EulerAngles.z));
-            m_ObjectAttached.MovePosition(m_AttachingPosition.position);
+            if (distance < m_StopDistance)
+            {
+                m_AttachedObject = true;
+                m_ObjectAttached.linearVelocity = Vector3.zero;
+                m_ObjectAttached.angularVelocity = Vector3.zero;
+                m_ObjectAttached.MovePosition(targetPos);
+                m_ObjectAttached.MoveRotation(m_AttachingPosition.rotation);
+                return;
+            }
         }
+
+        Vector3 force = (toTarget * springStrength) - (m_ObjectAttached.linearVelocity * damping);
+
+        // Limita la velocitat màxima per evitar que surti disparat
+        if (m_ObjectAttached.linearVelocity.magnitude > maxSpeed)
+            m_ObjectAttached.linearVelocity = m_ObjectAttached.linearVelocity.normalized * maxSpeed;
+
+        m_ObjectAttached.AddForce(force * Time.deltaTime, ForceMode.VelocityChange);
+
+        Quaternion targetRot = m_AttachingPosition.rotation;
+        m_ObjectAttached.MoveRotation( Quaternion.Lerp(m_ObjectAttached.rotation, targetRot, Time.deltaTime * 10f));
     }
+
 
     bool GrabObject()
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 3.0f))
+        if (Physics.Raycast(ray, out hit, 10.0f))
         {
             Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
             if (rb != null && (rb.gameObject.CompareTag("Cube") || rb.gameObject.CompareTag("Enemy")))
