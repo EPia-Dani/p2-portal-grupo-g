@@ -45,6 +45,13 @@ public class PortalPlacer : MonoBehaviour
 
         previewPortalOrange = mPortalsList.transform.Find("PreviewPortalOrange").gameObject;
         previewPortalBlue = mPortalsList.transform.Find("PreviewPortalBlue").gameObject;
+
+
+        previewPortalBlue.transform.position = Vector3.zero;
+        previewPortalBlue.SetActive(false);
+        previewPortalOrange.transform.position = Vector3.zero;
+        previewPortalOrange.SetActive(false);
+
     }
 
 /*  private void TryShootPortal(PortalType portal)
