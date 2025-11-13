@@ -9,6 +9,9 @@ public class Portal : MonoBehaviour
     public Camera reflectionCamera;
     public Portal mirrorPortal;
     public float offsetNearPlane;
+
+    private float portalSize = 1.0f;
+
     
     private bool canTp = true;
 
@@ -119,6 +122,13 @@ public class Portal : MonoBehaviour
         yield return new WaitForSeconds(1f);
         canTp = true;
         mirrorPortal.canTp = true;
+    }
+
+    public void SetScale(float scale)
+    {
+        Debug.Log("Setting portal scale to: " + scale);
+        portalSize = scale;
+        transform.localScale = Vector3.one * portalSize;
     }
 
 
