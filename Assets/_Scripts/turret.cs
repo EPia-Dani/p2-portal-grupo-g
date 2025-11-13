@@ -37,6 +37,7 @@ public class turret : MonoBehaviour
                         hitPlayer(hit.collider.gameObject);
                         break;
                     case "Enemy":
+                        Debug.Log("Hit turret");
                         hitTurret(hit.collider.gameObject);
                         break;
                 }
@@ -75,11 +76,16 @@ public class turret : MonoBehaviour
     {
         turret turret = go.GetComponent<turret>();
 
-        turret.die();
+        if (turret.isActive)
+        {
+            Debug.Log("Turret active");
+            turret.die();
+        }
     }
 
     public void die()
     {
+        isActive = false;
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         Debug.Log("turret is dead");
     }
