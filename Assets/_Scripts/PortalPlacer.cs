@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PortalPlacer : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class PortalPlacer : MonoBehaviour
 
     private GameObject previewPortalOrange;
     private GameObject previewPortalBlue;
+    public GameObject invalidPortalImage;
 
     private bool isPreviewing = false;
     private PortalType currentPreviewType = PortalType.None;
@@ -51,6 +53,8 @@ public class PortalPlacer : MonoBehaviour
         previewPortalBlue.SetActive(false);
         previewPortalOrange.transform.position = Vector3.zero;
         previewPortalOrange.SetActive(false);
+
+        invalidPortalImage.SetActive(false);
 
     }
 
@@ -286,12 +290,14 @@ public class PortalPlacer : MonoBehaviour
 
         // Activem el portal per veure'l durant la previsualització
         currentPreviewPortal.SetActive(true);
+        invalidPortalImage.SetActive(false);
     }
 
     private void StopPreviewPortal()
     {
         if (currentPreviewPortal != null){
             currentPreviewPortal.SetActive(false);
+            invalidPortalImage.SetActive(false);
             Debug.Log("1111111111111111 Preview stopped");
         }
             
@@ -322,7 +328,8 @@ public class PortalPlacer : MonoBehaviour
                 else
                 {
                     currentPreviewPortal.SetActive(false);
-                    Debug.Log("22222222222222222 Preview stopped"); //aquest no surt, correcte perque la superficie és valida
+                    invalidPortalImage.SetActive(true);
+                    //Debug.Log("22222222222222222 Preview stopped"); //aquest no surt, correcte perque la superficie és valida
                     return;
                 }
             }
@@ -343,13 +350,15 @@ public class PortalPlacer : MonoBehaviour
             if (CheckValidPortalPosition(currentPreviewPortal, hit.collider, hit.point, portalRotation))
             {
                 currentPreviewPortal.SetActive(true);
+                invalidPortalImage.SetActive(false);
                 //currentPreviewPortal.transform.SetPositionAndRotation(hit.point, portalRotation);
                 currentPreviewPortal.transform.SetPositionAndRotation(hit.point + hit.normal * 0.01f, portalRotation);
             }
             else
             {
                 currentPreviewPortal.SetActive(false);
-                Debug.Log("333333333333333333333 Preview stopped"); //per algun motiu no és vàlid position. ara ja sí
+                invalidPortalImage.SetActive(true);
+                //Debug.Log("333333333333333333333 Preview stopped"); //per algun motiu no és vàlid position. ara ja sí
             }
         }
         else
