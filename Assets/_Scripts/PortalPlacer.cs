@@ -329,7 +329,7 @@ public class PortalPlacer : MonoBehaviour
                 {
                     currentPreviewPortal.SetActive(false);
                     invalidPortalImage.SetActive(true);
-                    //Debug.Log("22222222222222222 Preview stopped"); //aquest no surt, correcte perque la superficie és valida
+                    Debug.Log("22222222222222222 Preview stopped"); //aquest no surt, correcte perque la superficie és valida
                     return;
                 }
             }
@@ -353,18 +353,19 @@ public class PortalPlacer : MonoBehaviour
                 invalidPortalImage.SetActive(false);
                 //currentPreviewPortal.transform.SetPositionAndRotation(hit.point, portalRotation);
                 currentPreviewPortal.transform.SetPositionAndRotation(hit.point + hit.normal * 0.01f, portalRotation);
+                Debug.Log("Setting Position to: " + currentPreviewPortal.transform.position);
             }
             else
             {
                 currentPreviewPortal.SetActive(false);
                 invalidPortalImage.SetActive(true);
-                //Debug.Log("333333333333333333333 Preview stopped"); //per algun motiu no és vàlid position. ara ja sí
+                Debug.Log("333333333333333333333 Preview stopped"); //per algun motiu no és vàlid position. ara ja sí
             }
         }
         else
         {
             //currentPreviewPortal.SetActive(false);
-            Debug.Log("44444444444444444 Preview stopped"); //normal que pari perque apunto al cel i no hi ha hit. NO, doncs ara apuntant a la paret han sortit molts quatres...
+            //Debug.Log("44444444444444444 Preview stopped"); //normal que pari perque apunto al cel i no hi ha hit. NO, doncs ara apuntant a la paret han sortit molts quatres...
         }
     }
 
@@ -402,7 +403,15 @@ public class PortalPlacer : MonoBehaviour
             var portalRotation = Quaternion.LookRotation(portalForward, portalUp);
 
             if (PlacePortal(GetPortal(portal), hit.collider, hit.point, portalRotation))
+            {
                 mOpenPortal |= portal;
+            }
+            else if (currentPreviewPortal != null)
+            {
+                currentPreviewPortal.SetActive(false);
+                invalidPortalImage.SetActive(true);
+                Debug.Log("0000 cannot place portal - invalid position.");
+            }
         }
         else
         {
@@ -416,26 +425,15 @@ public class PortalPlacer : MonoBehaviour
         Quaternion originalRot = portal.transform.rotation;
 
         portal.transform.SetPositionAndRotation(pos, rot);
+        Debug.Log("Original position set to: " + pos);
         bool valid = true;
 
         foreach (Transform child in portal.transform.Find("EmplacementPoints"))
         {
             Ray ray = new Ray(child.position - portal.transform.forward * 0.1f, portal.transform.forward);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1f))
+            if (Physics.Raycast(ray, out hit, 1.5f))
             {
-                //if (hit.collider.CompareTag("Portal"))
-                //{
-                //    string hitName = hit.collider.name.ToLower();
-                //    string myName = portal.name.ToLower();
-                //    if (!(hitName.Contains("blue") && myName.Contains("blue")) &&
-                //        !(hitName.Contains("orange") && myName.Contains("orange")))
-                //    {
-                //        valid = false;
-                //        break;
-                //    }
-                //}
-
                 if(hit.collider.CompareTag("Portal")) //evita col·locar portals un sobre l'altre
                 {
                     string hitName = hit.collider.name.ToLower();
@@ -473,7 +471,11 @@ public class PortalPlacer : MonoBehaviour
             }
         }
 
-        portal.transform.SetPositionAndRotation(originalPos, originalRot);
+        //if portal is a preview portal, skip this
+        if (!portal.name.Contains("Preview"))
+        {
+            portal.transform.SetPositionAndRotation(originalPos, originalRot);
+        }
         return valid;
     }
 
@@ -485,9 +487,10 @@ public class PortalPlacer : MonoBehaviour
             return false;
         }
             
-        Debug.Log("Originally placing portal at " + pos + " and moving to " + (pos + -portal.transform.forward * 0.01f));
+        //Debug.Log("Originally placing portal at " + pos + " and moving to " + (pos + -portal.transform.forward * 0.01f));
 
         portal.transform.SetPositionAndRotation(pos + -portal.transform.forward * 0.01f, rot);
+        Debug.Log("Final position set to: " + portal.transform.position);
         portal.SetActive(true);
         return true;
     }
