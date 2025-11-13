@@ -36,7 +36,8 @@ public class PortalPlacer : MonoBehaviour
     private GameObject previewPortalBlue;
     public GameObject invalidPortalImage;
 
-    private bool isPreviewing = false;
+    private bool isPreviewingBlue = false;
+    private bool isPreviewingOrange = false;
     private PortalType currentPreviewType = PortalType.None;
     private GameObject currentPreviewPortal;
 
@@ -67,12 +68,12 @@ public class PortalPlacer : MonoBehaviour
     void Update()
     {
         // ————— PORTAL BLAU —————
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isPreviewingOrange)
         {
             pressTime = 0f;
             holdStarted = false;
         }
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0) && !isPreviewingOrange)
         {
             pressTime += Time.deltaTime;
 
@@ -80,6 +81,7 @@ public class PortalPlacer : MonoBehaviour
             {
                 StartPreviewPortal(PortalType.Blue);
                 holdStarted = true;
+                isPreviewingBlue = true;
             }
 
             if (holdStarted)
@@ -101,15 +103,16 @@ public class PortalPlacer : MonoBehaviour
                 //TryShootPortal(PortalType.Blue);
                 shootBlueNextFixedUpdate = true;
             }
+            isPreviewingBlue = false;
         }
 
         // ————— PORTAL TARONJA —————
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !isPreviewingBlue)
         {
             pressTime = 0f;
             holdStarted = false;
         }
-        else if (Input.GetMouseButton(1))
+        else if (Input.GetMouseButton(1) && !isPreviewingBlue)
         {
             pressTime += Time.deltaTime;
         
@@ -117,6 +120,7 @@ public class PortalPlacer : MonoBehaviour
             {
                 StartPreviewPortal(PortalType.Orange);
                 holdStarted = true;
+                isPreviewingOrange = true;
             }
         
             if (holdStarted)
@@ -138,6 +142,7 @@ public class PortalPlacer : MonoBehaviour
                 //TryShootPortal(PortalType.Orange);
                 shootOrangeNextFixedUpdate = true;
             }
+            isPreviewingOrange = false;
         }
     }
 
@@ -159,7 +164,6 @@ public class PortalPlacer : MonoBehaviour
 
     private void StartPreviewPortal(PortalType portal)
     {
-        isPreviewing = true;
         currentPreviewType = portal;
         if (portal == PortalType.Blue)
             currentPreviewPortal = previewPortalBlue;
@@ -180,7 +184,6 @@ public class PortalPlacer : MonoBehaviour
         }
             
         invalidPortalImage.SetActive(false);
-        isPreviewing = false;
         currentPreviewType = PortalType.None;
         currentPreviewPortal = null;
     }
