@@ -8,7 +8,7 @@ public class PortalPlacer : MonoBehaviour
     //list of 4 mcrosshair scripts
     //public Crosshair[] mCrosshairs = new Crosshair[4];
 
-    public LayerMask mHitMask; //la layer PortalWall
+    public LayerMask mHitMask; //la layer PortalWall i Portal
     public GameObject mPortalsList;
 
     public float mTimeToRecoil = 0.5f;
@@ -25,7 +25,7 @@ public class PortalPlacer : MonoBehaviour
         Orange = 2
     }
 
-    private PortalType mOpenPortal = PortalType.None;
+    private PortalType mOpenPortal = PortalType.None; //00 None, 01 Blue, 10 Orange, 11 Both
 
     private float pressTime = 0f;
     private bool holdStarted = false;
@@ -175,12 +175,11 @@ public class PortalPlacer : MonoBehaviour
     {
         if (currentPreviewPortal != null){
             currentPreviewPortal.transform.localScale = Vector3.one;
-            currentPreviewPortal.SetActive(false);
-            invalidPortalImage.SetActive(false);
+            currentPreviewPortal.SetActive(false); 
             //Debug.Log("1111111111111111 Preview stopped");
         }
             
-
+        invalidPortalImage.SetActive(false);
         isPreviewing = false;
         currentPreviewType = PortalType.None;
         currentPreviewPortal = null;
@@ -206,21 +205,21 @@ public class PortalPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 250.0f))
         {
-            bool isValidSurface = (mHitMask.value & (1 << hit.collider.gameObject.layer)) != 0;
+            bool isValidSurface = (mHitMask.value & (1 << hit.collider.gameObject.layer)) != 0; //1 << hit.collider.gameObject.layer fa un shift a l'esquerra. 000100 si layer és 2. hitmaskvalue és 000101 si té layers 0 i 2. el & fa un AND bit a bit. 0 significaria que no ha tocat cap layer vàlida
 
             if (!isValidSurface)
             {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Portal"))
-                {
-                    //TODO si cal, de moment no
-                }
-                else
-                {
+                //if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Portal"))
+                //{
+                //    //TODO si cal, de moment no. ja ho fem per layer
+                //}
+                //else
+                //{
                     currentPreviewPortal.SetActive(false);
                     invalidPortalImage.SetActive(true);
                     //Debug.Log("22222222222222222 Preview stopped"); //aquest no surt, correcte perque la superficie és valida
                     return;
-                }
+                //}
             }
 
             var cameraRotation = mCamera.transform.rotation;
@@ -293,7 +292,7 @@ public class PortalPlacer : MonoBehaviour
 
             if (PlacePortal(GetPortal(portal), hit.collider, hit.point, portalRotation))
             {
-                mOpenPortal |= portal;
+                mOpenPortal |= portal; //mOpenPortal |= PortalType.Blue; // 00 | 01 = 01. si afegim el taronja, 01 | 10 = 11
                 Portal portalScript = GetPortal(portal).GetComponent<Portal>();
                 portalScript.SetScale(portalScale);
                 portalScale = 1f;
@@ -307,6 +306,7 @@ public class PortalPlacer : MonoBehaviour
         }
         else
         {
+            invalidPortalImage.SetActive(true);
             //Debug.Log("No hit detected - cannot place portal.");
         }
     }

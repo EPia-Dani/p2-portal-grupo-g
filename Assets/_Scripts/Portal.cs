@@ -126,7 +126,6 @@ public class Portal : MonoBehaviour
 
     public void SetScale(float scale)
     {
-        Debug.Log("Setting portal scale to: " + scale);
         portalSize = scale;
         transform.localScale = Vector3.one * portalSize;
     }

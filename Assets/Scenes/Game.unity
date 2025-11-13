@@ -9622,6 +9622,11 @@ PrefabInstance:
       objectReference: {fileID: 1156536082}
     - target: {fileID: 345804167882498690, guid: feea2d82a0fb56341adf72c78178cf00,
         type: 3}
+      propertyPath: mHitMask.m_Bits
+      value: 384
+      objectReference: {fileID: 0}
+    - target: {fileID: 345804167882498690, guid: feea2d82a0fb56341adf72c78178cf00,
+        type: 3}
       propertyPath: invalidPortalImage
       value: 
       objectReference: {fileID: 2078030778}
