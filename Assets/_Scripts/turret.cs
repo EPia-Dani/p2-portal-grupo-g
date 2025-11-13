@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class turret : MonoBehaviour
@@ -25,6 +26,9 @@ public class turret : MonoBehaviour
             turretPos = transform.position + transform.forward * 0.2f;
             turretForward = transform.forward;
 
+            lineRenderer.startWidth = lineRendererWidth;
+            lineRenderer.endWidth = lineRendererWidth;
+
             if (Physics.Raycast(turretPos, turretForward, out RaycastHit hit, maxDistance))
             {
                 lineRenderer.SetPosition(0, turretPos);
@@ -48,18 +52,35 @@ public class turret : MonoBehaviour
                 lineRenderer.SetPosition(1, turretPos + turretForward * maxDistance);
             }
         }
+        else
+        {
+            lineRenderer.startWidth = 0;
+            lineRenderer.endWidth = 0;
+        }
     }
 
 
-    //private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((other.gameObject.tag == "Cube") || other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("turret deactivated");
+            StartCoroutine(setInactive());
+        }
+    }
+
+    private IEnumerator setInactive()
+    {
+        isActive = false;
+        yield return new WaitForSeconds(2f);
+        isActive = true;
+    }
 
     private void setLineRenderer(LineRenderer lineRenderer)
     {
         lineRenderer.positionCount = 2;
         lineRenderer.startColor = Color.red;
         lineRenderer.endColor = Color.red;
-        lineRenderer.startWidth = lineRendererWidth;
-        lineRenderer.endWidth = lineRendererWidth;
     }
 
     private void hitPlayer(GameObject go)
@@ -78,15 +99,15 @@ public class turret : MonoBehaviour
 
         if (turret.isActive)
         {
-            Debug.Log("Turret active");
             turret.die();
         }
     }
 
-    public void die()
+    private void die()
     {
         isActive = false;
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        Destroy(gameObject, 0.7f);
         Debug.Log("turret is dead");
     }
 

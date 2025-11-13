@@ -13,7 +13,8 @@ public class Portal : MonoBehaviour
     private float portalSize = 1.0f;
 
     
-    private bool canTp = true;
+    private bool canTpPlayer = true;
+    private bool canTpCube = true;
 
     void Start()
     {
@@ -45,13 +46,16 @@ public class Portal : MonoBehaviour
                 switch (other.tag)
                 {
                     case "Player":
-                        if (canTp)
+                        if (canTpPlayer)
                         {
-                            StartCoroutine(waitTeleport(other.gameObject));
+                            StartCoroutine(waitTeleportPlayer(other.gameObject));
                         }
                         break;
                     case "Cube":
-                        StartCoroutine(teleportCube(other.gameObject));
+                        if (canTpCube)
+                        {
+                            StartCoroutine(teleportCube(other.gameObject));
+                        }
                         break;
                 }
             }
@@ -62,7 +66,26 @@ public class Portal : MonoBehaviour
     private IEnumerator teleportCube(GameObject cube)
     {
         Debug.Log("Teleporting cube");
-        yield return new WaitForSeconds(1f);
+
+        canTpCube = false;
+
+        Rigidbody rb = cube.GetComponent<Rigidbody>();
+
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        rb.isKinematic = true;
+
+        Vector3 l_Velocity = transform.InverseTransformDirection(rb.linearVelocity);
+
+
+        Vector3 enterPosition = transform.InverseTransformPoint(cube.transform.position);
+        Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
+
+        Vector3 enterDirection = transform.InverseTransformDirection(cube.transform.forward);
+        Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
+
+        cube.transform.position = exitPosition;
+        cube.transform.forward = exitDirection;
+        cube.transform.position += mirrorPortal.transform.forward * -0.2f;
 
         /*
          *  Solo permitiermos que se teletransporte cuando no lo estemos llevando, por lo que tendremos que comprobar esa condici�n
@@ -74,6 +97,9 @@ public class Portal : MonoBehaviour
          * l_Rigidbody.velocity = _Portal.m_MirrorPortal.transform.TransformDirection(l_Velocity);
          * transform.localScale *= (_Portal.m_MirrorPortal.transform.localScale.x/_Portal.transform.localScale.x);
          */
+
+        yield return new WaitForSeconds(1f);
+        canTpCube = true;
     }
 
     private void teleportPlayer(GameObject player)
@@ -111,17 +137,22 @@ public class Portal : MonoBehaviour
         cc.enabled = true; //enable character controller again
     }
 
-    private IEnumerator waitTeleport(GameObject player)
+    private IEnumerator waitTeleportPlayer(GameObject player)
     {
-        canTp = false;
-        mirrorPortal.canTp = false;
+        Rigidbody rb = player.GetComponent<Rigidbody>();
 
-        Debug.Log("Teleporting player");
+        canTpPlayer = false;
+        mirrorPortal.canTpPlayer = false;
+
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        rb.isKinematic = true;
+
         teleportPlayer(player);
 
         yield return new WaitForSeconds(1f);
-        canTp = true;
-        mirrorPortal.canTp = true;
+        canTpPlayer = true;
+        mirrorPortal.canTpPlayer = true;
+        rb.isKinematic = false;
     }
 
     public void SetScale(float scale)

@@ -1306,8 +1306,8 @@ GameObject:
   - component: {fileID: 5402206419237377103}
   - component: {fileID: 345804167882498690}
   - component: {fileID: 9155839457847228774}
-  - component: {fileID: 2714632563228439739}
   - component: {fileID: 7567344834718520452}
+  - component: {fileID: 9102435802283171140}
   m_Layer: 9
   m_Name: Character
   m_TagString: Player
@@ -1497,29 +1497,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mHitMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   mPortalsList: {fileID: 0}
   mTimeToRecoil: 0.5
   mCamera: {fileID: 177195277610605055}
+  invalidPortalImage: {fileID: 0}
 --- !u!114 &9155839457847228774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3879209107856321148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94881367543d1534a9dc02e943891875, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AttachingPosition: {fileID: 1731730391597929388}
-  m_ObjectAttached: {fileID: 0}
-  springStrength: 100
-  damping: 20
-  maxSpeed: 5
-  m_StopDistance: 0.25
---- !u!114 &2714632563228439739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1545,7 +1528,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3879209107856321148}
   serializedVersion: 4
-  m_Mass: 0.5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1564,6 +1547,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9102435802283171140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3879209107856321148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cd0a10eca08a994aab356c87d2b8ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3975315684693526764
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,6 +3153,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -86.418
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: a1416dba650229e4f96c511c2225e9a3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f6e76f6d5e0f00148a263214da1ce7c4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
