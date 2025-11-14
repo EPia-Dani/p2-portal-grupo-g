@@ -6,7 +6,14 @@ public class DestroyObjects : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
+                turret turret = collision.gameObject.GetComponent<turret>();
+                turret.die();
+            }
+            else{
+                Destroy(collision.gameObject);
+            }
         }
     }
 }

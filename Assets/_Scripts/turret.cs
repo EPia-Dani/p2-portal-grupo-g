@@ -10,6 +10,12 @@ public class turret : MonoBehaviour, attachable
     [SerializeField] private float maxDistance;
     [SerializeField] private float lineRendererWidth;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip deactivate;
+    [SerializeField] private AudioClip activate;
+    [SerializeField] private AudioClip turretDie;
+
     bool attached = false;
     private bool isActive = true;
     private Vector3 turretPos;
@@ -75,7 +81,9 @@ public class turret : MonoBehaviour, attachable
     private IEnumerator setInactive()
     {
         isActive = false;
+        audioSource.PlayOneShot(deactivate);
         yield return new WaitForSeconds(2f);
+        audioSource.PlayOneShot(activate);
         isActive = true;
     }
 
@@ -101,13 +109,14 @@ public class turret : MonoBehaviour, attachable
         }
     }
 
-    private void die()
+    public void die()
     {
         if (isActive == false)
         {
             return;
         }
 
+        audioSource.PlayOneShot(turretDie);
         diePS.Play();
 
         isActive = false;

@@ -13,6 +13,10 @@ public class Door : MonoBehaviour
     private float doorMoveDistance = 2f;
     private float openCloseDuration = 3f;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip openDoor;
+
     void Start()
     {
         Transform t1 = transform.Find("SubDoor1");
@@ -66,6 +70,9 @@ public class Door : MonoBehaviour
         Vector3 target2 = open ? originalPosition2 + new Vector3(0f, doorMoveDistance, 0f) : originalPosition2;
 
         float t = 0f;
+
+        audioSource.pitch = 0.7f;
+        audioSource.PlayOneShot(openDoor);
 
         while (t < openCloseDuration)
         {

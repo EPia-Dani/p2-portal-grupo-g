@@ -16,7 +16,9 @@ public class Portal : MonoBehaviour
     private bool canTpPlayer = true;
     private bool canTpCube = true;
 
-
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip tpSound;
     void OnEnable()
     {
         PortalPlacer.OnCrosshairChange += HandleCrosshairChange;
@@ -80,13 +82,10 @@ public class Portal : MonoBehaviour
 
         if (cc.isAttached())
         {
-            Debug.Log("cannot tp cube");
             yield return null;
         }
         else
         {
-            Debug.Log("Teleporting cube");
-
             canTpCube = false;
             mirrorPortal.canTpCube = false;
 
@@ -108,6 +107,7 @@ public class Portal : MonoBehaviour
             cube.transform.forward = exitDirection;
             cube.transform.position += mirrorPortal.transform.forward * -0.2f;
             cube.transform.localScale *= (mirrorPortal.transform.localScale.x / transform.localScale.x);
+            audioSource.PlayOneShot(tpSound);
 
             rb.isKinematic = false;
             rb.linearVelocity = exitVelocity;
@@ -148,6 +148,7 @@ public class Portal : MonoBehaviour
 
         player.transform.rotation = Quaternion.Euler(0, fpc.getYaw(), 0);
         MPitchController.localRotation = Quaternion.Euler(fpc.getPitch(), 0, 0);
+        audioSource.PlayOneShot(tpSound);
 
         fpc.enabled = true;
         cc.enabled = true;

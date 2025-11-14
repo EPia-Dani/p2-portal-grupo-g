@@ -13,6 +13,11 @@ public class AttachObject : MonoBehaviour
 
     private bool hasObject;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip grabObj;
+    [SerializeField] private AudioClip releaseObj;
+
     void Update()
     {
         
@@ -25,6 +30,7 @@ public class AttachObject : MonoBehaviour
                     m_AttachedObject=false;
                     m_ObjectAttached.isKinematic=false;
                     m_ObjectAttached.useGravity=false;
+                    audioSource.PlayOneShot(grabObj);
                     m_ObjectAttached.linearVelocity = Vector3.zero;
                     m_ObjectAttached.angularVelocity = Vector3.zero;
                 }
@@ -37,6 +43,7 @@ public class AttachObject : MonoBehaviour
                 m_ObjectAttached.useGravity=true;
                 m_ObjectAttached.AddForce(m_AttachingPosition.forward*500.0f);
                 releaseObject();
+                audioSource.PlayOneShot(releaseObj);
                 m_ObjectAttached = null;
             }
         }
@@ -46,6 +53,7 @@ public class AttachObject : MonoBehaviour
             m_ObjectAttached.isKinematic=false;
             m_ObjectAttached.useGravity=true;
             releaseObject();
+            audioSource.PlayOneShot(releaseObj);
             m_ObjectAttached = null;
         }
         if(hasObject)
@@ -65,8 +73,6 @@ public class AttachObject : MonoBehaviour
             turret turret = m_ObjectAttached.gameObject.GetComponent<turret>();
             turret.setAttached(false);
         }
-
-        Debug.Log("Object attached is false");
     }
 
     void UpdateAttachedObject()
@@ -124,7 +130,6 @@ public class AttachObject : MonoBehaviour
                     turret turret = m_ObjectAttached.gameObject.GetComponent<turret>();
                     turret.setAttached(true);
                 }
-                Debug.Log("Object attached is true");
 
                 m_AttachingObjectStartRotation = m_ObjectAttached.rotation;
                 return true;

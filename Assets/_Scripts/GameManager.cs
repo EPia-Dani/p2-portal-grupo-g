@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameWonCanvas;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip loseSound;
+
     private void Awake()
     {
         StartCoroutine(ReloadGameScene());
@@ -57,6 +61,7 @@ public class GameManager : MonoBehaviour
     private System.Collections.IEnumerator ShowGameOverMenu()
     {
         yield return new WaitForSecondsRealtime(1f);
+        audioSource.PlayOneShot(loseSound);
         gameOverCanvas.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
         gameOverCanvas.SetActive(false);

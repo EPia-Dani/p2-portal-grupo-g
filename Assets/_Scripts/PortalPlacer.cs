@@ -15,6 +15,10 @@ public class PortalPlacer : MonoBehaviour
     private Portal portalOrange;
     private Portal portalBlue;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip placePortalSound;
+
     [System.Flags]
     public enum PortalType
     {
@@ -347,6 +351,7 @@ public class PortalPlacer : MonoBehaviour
 
         portal.transform.SetPositionAndRotation(pos + -portal.transform.forward * 0.01f, rot);
         portal.SetActive(true);
+        audioSource.PlayOneShot(placePortalSound);
         return true;
     }
 
