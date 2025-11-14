@@ -9760,7 +9760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &734222576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19435,7 +19435,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7567344834718520452, guid: feea2d82a0fb56341adf72c78178cf00, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -27819,6 +27820,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: turret-white
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860542022368369507, guid: 489436003ea58fd49a753458cd82ad12,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4860542022368855875, guid: 489436003ea58fd49a753458cd82ad12,
         type: 3}

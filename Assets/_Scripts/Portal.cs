@@ -107,9 +107,9 @@ public class Portal : MonoBehaviour
         ThirdPersonController fpc = player.GetComponent<ThirdPersonController>();
         CharacterController cc = player.GetComponent<CharacterController>();
         
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = true;
+        //Rigidbody rb = player.GetComponent<Rigidbody>();
+        //rb.linearVelocity = Vector3.zero;
+        //rb.isKinematic = true;
 
         Transform MPitchController = player.transform.Find("PitchController");
 
@@ -138,28 +138,28 @@ public class Portal : MonoBehaviour
         MPitchController.localRotation = Quaternion.Euler(fpc.getPitch(), 0, 0);
 
 
-        rb.isKinematic = false;
-        rb.linearVelocity = Vector3.zero;
+        //rb.isKinematic = false;
+        //rb.linearVelocity = Vector3.zero;
         fpc.enabled = true;
         cc.enabled = true; //enable character controller again
     }
 
     private IEnumerator waitTeleportPlayer(GameObject player)
     {
-        Rigidbody rb = player.GetComponent<Rigidbody>();
+        //Rigidbody rb = player.GetComponent<Rigidbody>();
 
         canTpPlayer = false;
         mirrorPortal.canTpPlayer = false;
 
-        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-        rb.isKinematic = true;
+        //rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        //rb.isKinematic = true;
 
         teleportPlayer(player);
 
         yield return new WaitForSeconds(1f);
         canTpPlayer = true;
         mirrorPortal.canTpPlayer = true;
-        rb.isKinematic = false;
+        //rb.isKinematic = false;
     }
 
     public void SetScale(float scale)
