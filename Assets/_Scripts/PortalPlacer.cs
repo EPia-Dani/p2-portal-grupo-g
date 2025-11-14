@@ -5,9 +5,6 @@ using UnityEngine.UI;
 public class PortalPlacer : MonoBehaviour
 {
     public static event System.Action<PortalType> OnCrosshairChange;
-    //public Crosshair mCrosshair;
-    //list of 4 mcrosshair scripts
-    //public Crosshair[] mCrosshairs = new Crosshair[4];
 
     public LayerMask mHitMask; //la layer PortalWall i Portal
     public GameObject mPortalsList;
@@ -69,7 +66,7 @@ public class PortalPlacer : MonoBehaviour
 
     void Update()
     {
-        // ————— PORTAL BLAU —————
+        //PORTAL BLAU
         if (Input.GetMouseButtonDown(0) && !isPreviewingOrange)
         {
             pressTime = 0f;
@@ -95,20 +92,18 @@ public class PortalPlacer : MonoBehaviour
         {
             if (!holdStarted && pressTime < 0.5f)
             {
-                //TryShootPortal(PortalType.Blue);
                 shootBlueNextFixedUpdate = true;
             }
 
             if (holdStarted)
             {
                 StopPreviewPortal();
-                //TryShootPortal(PortalType.Blue);
                 shootBlueNextFixedUpdate = true;
             }
             isPreviewingBlue = false;
         }
 
-        // ————— PORTAL TARONJA —————
+        //PORTAL TARONJA
         if (Input.GetMouseButtonDown(1) && !isPreviewingBlue)
         {
             pressTime = 0f;
@@ -134,14 +129,12 @@ public class PortalPlacer : MonoBehaviour
         {
             if (!holdStarted && pressTime < 0.5f)
             {
-                //TryShootPortal(PortalType.Orange);
                 shootOrangeNextFixedUpdate = true;
             }
         
             if (holdStarted)
             {
                 StopPreviewPortal();
-                //TryShootPortal(PortalType.Orange);
                 shootOrangeNextFixedUpdate = true;
             }
             isPreviewingOrange = false;
@@ -182,7 +175,6 @@ public class PortalPlacer : MonoBehaviour
         if (currentPreviewPortal != null){
             currentPreviewPortal.transform.localScale = Vector3.one;
             currentPreviewPortal.SetActive(false); 
-            //Debug.Log("1111111111111111 Preview stopped");
         }
             
         invalidPortalImage.SetActive(false);
@@ -202,7 +194,6 @@ public class PortalPlacer : MonoBehaviour
             portalScale = Mathf.Clamp(portalScale, minPortalScale, maxPortalScale);
 
             currentPreviewPortal.transform.localScale = Vector3.one * portalScale;
-            //Debug.Log("Preview portal scale set to: " + portalScale); this works
         }
 
         Ray ray = mCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -214,17 +205,9 @@ public class PortalPlacer : MonoBehaviour
 
             if (!isValidSurface)
             {
-                //if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Portal"))
-                //{
-                //    //TODO si cal, de moment no. ja ho fem per layer
-                //}
-                //else
-                //{
-                    currentPreviewPortal.SetActive(false);
-                    invalidPortalImage.SetActive(true);
-                    //Debug.Log("22222222222222222 Preview stopped"); //aquest no surt, correcte perque la superficie és valida
-                    return;
-                //}
+                currentPreviewPortal.SetActive(false);
+                invalidPortalImage.SetActive(true);
+                return;
             }
 
             var cameraRotation = mCamera.transform.rotation;
@@ -244,21 +227,13 @@ public class PortalPlacer : MonoBehaviour
             {
                 currentPreviewPortal.SetActive(true);
                 invalidPortalImage.SetActive(false);
-                //currentPreviewPortal.transform.SetPositionAndRotation(hit.point, portalRotation);
                 currentPreviewPortal.transform.SetPositionAndRotation(hit.point + hit.normal * 0.01f, portalRotation);
-                //Debug.Log("Setting Position to: " + currentPreviewPortal.transform.position);
             }
             else
             {
                 currentPreviewPortal.SetActive(false);
                 invalidPortalImage.SetActive(true);
-                //Debug.Log("333333333333333333333 Preview stopped"); //per algun motiu no és vàlid position. ara ja sí
             }
-        }
-        else
-        {
-            //currentPreviewPortal.SetActive(false);
-            //Debug.Log("44444444444444444 Preview stopped"); //normal que pari perque apunto al cel i no hi ha hit. NO, doncs ara apuntant a la paret han sortit molts quatres...
         }
     }
 
@@ -273,11 +248,10 @@ public class PortalPlacer : MonoBehaviour
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Portal"))
                 {
-                    //TODO si cal, de moment permetem no fer res
+                    //TODO. revisar si ja es mira a dalt
                 }
                 else
                 {
-                    //Debug.Log("INVALID SURFACE - cannot place portal.");
                     return;
                 }
             }
@@ -309,13 +283,11 @@ public class PortalPlacer : MonoBehaviour
             {
                 currentPreviewPortal.SetActive(false);
                 invalidPortalImage.SetActive(true);
-                //Debug.Log("0000 cannot place portal - invalid position.");
             }
         }
         else
         {
             invalidPortalImage.SetActive(true);
-            //Debug.Log("No hit detected - cannot place portal.");
         }
     }
 
@@ -325,7 +297,6 @@ public class PortalPlacer : MonoBehaviour
         Quaternion originalRot = portal.transform.rotation;
 
         portal.transform.SetPositionAndRotation(pos, rot);
-        //Debug.Log("Original position set to: " + pos);
         bool valid = true;
 
         foreach (Transform child in portal.transform.Find("EmplacementPoints"))
@@ -342,15 +313,12 @@ public class PortalPlacer : MonoBehaviour
                     if ((hitName.Contains("blue") && myName.Contains("blue")) ||
                         (hitName.Contains("orange") && myName.Contains("orange")))
                     {
-                        //Debug.Log("Overwriting same-colored portal position." + hit.collider.name + " with " + portal.name);
                         continue; //se sobreescriu el portal si és el mateix color
                     }
                     else
                     {
                         // Si és un altre portal, no vàlid
-                        //Debug.Log("Cannot place portal on the opposite portal!" + hit.collider.name + " with " + portal.name);
                         valid = false;
-                        //Debug.Log("5555 false invalidPoint here");
                         break;
                     }
     
@@ -359,14 +327,12 @@ public class PortalPlacer : MonoBehaviour
                 if ((mHitMask.value & (1 << hit.collider.gameObject.layer)) == 0)
                 {
                     valid = false;
-                    //Debug.Log("6666 false invalidPoint here");
                     break;
                 }
             }
             else
             {
                 valid = false;
-                //Debug.Log("7777 false invalidPoint here");
                 break;
             }
         }
@@ -383,14 +349,10 @@ public class PortalPlacer : MonoBehaviour
     {
         if (!CheckValidPortalPosition(portal, wallCollider, pos, rot))
         {
-            //Debug.Log("PlacePortal returning false");
             return false;
         }
-            
-        //Debug.Log("Originally placing portal at " + pos + " and moving to " + (pos + -portal.transform.forward * 0.01f));
 
         portal.transform.SetPositionAndRotation(pos + -portal.transform.forward * 0.01f, rot);
-        //Debug.Log("Final position set to: " + portal.transform.position);
         portal.SetActive(true);
         return true;
     }

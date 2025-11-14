@@ -92,7 +92,6 @@ public class Portal : MonoBehaviour
 
             Rigidbody rb = cube.GetComponent<Rigidbody>();
 
-            //rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             Vector3 enterVelocity = rb.linearVelocity;
             rb.isKinematic = true;
 
@@ -123,15 +122,11 @@ public class Portal : MonoBehaviour
     {
         ThirdPersonController fpc = player.GetComponent<ThirdPersonController>();
         CharacterController cc = player.GetComponent<CharacterController>();
-        
-        //Rigidbody rb = player.GetComponent<Rigidbody>();
-        //rb.linearVelocity = Vector3.zero;
-        //rb.isKinematic = true;
 
         Transform MPitchController = player.transform.Find("PitchController");
 
         fpc.enabled = false;
-        cc.enabled = false; //disable update of player
+        cc.enabled = false;
 
         //convert player position and direction into entering portal's local coords
         Vector3 enterPosition = transform.InverseTransformPoint(player.transform.position);
@@ -154,15 +149,12 @@ public class Portal : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(0, fpc.getYaw(), 0);
         MPitchController.localRotation = Quaternion.Euler(fpc.getPitch(), 0, 0);
 
-        //rb.isKinematic = false;
-        //rb.linearVelocity = Vector3.zero;
         fpc.enabled = true;
-        cc.enabled = true; //enable character controller again
+        cc.enabled = true;
     }
 
     private IEnumerator waitTeleportPlayer(GameObject player)
     {
-        //Rigidbody rb = player.GetComponent<Rigidbody>();
 
         AttachObject attachObject = player.GetComponent<AttachObject>();
         if (attachObject.itHasObject())
@@ -174,15 +166,11 @@ public class Portal : MonoBehaviour
             canTpPlayer = false;
             mirrorPortal.canTpPlayer = false;
 
-            //rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-            //rb.isKinematic = true;
-
             teleportPlayer(player);
 
             yield return new WaitForSeconds(0.5f);
             canTpPlayer = true;
             mirrorPortal.canTpPlayer = true;
-            //rb.isKinematic = false;
         }
     }
 
@@ -195,7 +183,6 @@ public class Portal : MonoBehaviour
 
     private void HandleCrosshairChange(PortalPlacer.PortalType type)
     {
-        //Debug.Log("Crosshair changed to: " + type);
         switch (type)
         {
             case PortalPlacer.PortalType.None:

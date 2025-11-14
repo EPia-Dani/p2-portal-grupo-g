@@ -9,7 +9,6 @@ public class pressureButton : MonoBehaviour
     {
         if (other.gameObject.tag == "Cube")
         {
-            Debug.Log("Cube pressing the button...");
             door.OpenDoors();
         }
     }
@@ -18,7 +17,6 @@ public class pressureButton : MonoBehaviour
     {
         if (other.gameObject.tag == "Cube")
         {
-            Debug.Log("No more pressing the button...");
             door.CloseDoors();
         }
     }

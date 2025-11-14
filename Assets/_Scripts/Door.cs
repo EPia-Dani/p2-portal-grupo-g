@@ -10,8 +10,8 @@ public class Door : MonoBehaviour
 
     private bool isOpening = false;
     private Coroutine currentCoroutine = null;
-    private float doorMoveDistance = 2f;    // moviment vertical de cada subdoor
-    private float openCloseDuration = 3f;   // durada de l'obertura/tancament
+    private float doorMoveDistance = 2f;
+    private float openCloseDuration = 3f;
 
     void Start()
     {

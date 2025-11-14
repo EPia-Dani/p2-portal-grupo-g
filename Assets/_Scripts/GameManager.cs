@@ -29,14 +29,11 @@ public class GameManager : MonoBehaviour
         menuCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
         gameWonCanvas.SetActive(false);
-        //Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        Debug.Log("Resuming game...");
         menuCanvas.SetActive(false);
-        //Time.timeScale = 1f;
     }
 
     private void HandlePlayerWin()

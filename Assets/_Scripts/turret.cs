@@ -23,7 +23,6 @@ public class turret : MonoBehaviour, attachable
         diePS = GetComponentInChildren<ParticleSystem>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isActive)
@@ -42,7 +41,6 @@ public class turret : MonoBehaviour, attachable
                 switch (hit.collider.tag)
                 {
                     case "Player":
-                        //Debug.Log("Hit player");
                         hitPlayer(hit.collider.gameObject);
                         break;
                     case "Enemy":
@@ -70,7 +68,6 @@ public class turret : MonoBehaviour, attachable
     {
         if ((other.gameObject.tag == "Cube") || other.gameObject.tag == "Enemy")
         {
-            Debug.Log("turret deactivated");
             StartCoroutine(setInactive());
         }
     }
@@ -117,7 +114,6 @@ public class turret : MonoBehaviour, attachable
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
         Destroy(gameObject, 2f);
-        //Debug.Log("turret is dead");
     }
 
 }

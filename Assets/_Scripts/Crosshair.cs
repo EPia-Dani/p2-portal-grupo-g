@@ -21,7 +21,6 @@ public class Crosshair : MonoBehaviour
 
     private void HandleCrosshairChange(PortalPlacer.PortalType type)
     {
-        //Debug.Log("Crosshair changed to: " + type);
         switch (type)
         {
             case PortalPlacer.PortalType.None:

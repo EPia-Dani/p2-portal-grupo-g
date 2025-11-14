@@ -23,7 +23,7 @@ public class AttachObject : MonoBehaviour
                 if (GrabObject()){
                     hasObject=true;
                     m_AttachedObject=false;
-                    m_ObjectAttached.isKinematic=false; //potser ja no calen aquestes linies pero les deixo per siun cas
+                    m_ObjectAttached.isKinematic=false;
                     m_ObjectAttached.useGravity=false;
                     m_ObjectAttached.linearVelocity = Vector3.zero;
                     m_ObjectAttached.angularVelocity = Vector3.zero;
