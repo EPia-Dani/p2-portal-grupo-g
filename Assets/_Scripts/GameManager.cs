@@ -33,11 +33,15 @@ public class GameManager : MonoBehaviour
         menuCanvas.SetActive(true);
         gameOverCanvas.SetActive(false);
         gameWonCanvas.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ResumeGame()
     {
         menuCanvas.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void HandlePlayerWin()
@@ -65,6 +69,8 @@ public class GameManager : MonoBehaviour
         gameOverCanvas.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
         gameOverCanvas.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Retry();
     }
 
@@ -81,6 +87,12 @@ public class GameManager : MonoBehaviour
         }
 
         yield return SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
+        GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cube");
+
+        foreach (GameObject obj in cubes)
+        {
+            Destroy(obj);
+        }
 
         StartGame();
     }
