@@ -4,6 +4,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//Ara és FirstPersonController però no li canviem el nom
 public class ThirdPersonController : MonoBehaviour, TeleportableObject
 {
 
