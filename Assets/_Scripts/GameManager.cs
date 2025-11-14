@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameWonCanvas;
 
-    private void Start()
+    private void Awake()
     {
         StartCoroutine(ReloadGameScene());
     }
