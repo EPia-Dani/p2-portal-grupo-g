@@ -15,7 +15,7 @@ public class AttachObject : MonoBehaviour
 
     void Update()
     {
-        //TODO: Input system
+        
         if(Input.GetKeyDown(KeyCode.E))
         {
             if(!hasObject)
@@ -35,7 +35,8 @@ public class AttachObject : MonoBehaviour
                 hasObject=false;
                 m_ObjectAttached.isKinematic=false;
                 m_ObjectAttached.useGravity=true;
-                m_ObjectAttached.AddForce(m_AttachingPosition.forward*70.0f);
+                m_ObjectAttached.AddForce(m_AttachingPosition.forward*500.0f);
+                releaseObject();
                 m_ObjectAttached = null;
             }
         }
@@ -44,10 +45,28 @@ public class AttachObject : MonoBehaviour
             hasObject=false;
             m_ObjectAttached.isKinematic=false;
             m_ObjectAttached.useGravity=true;
+            releaseObject();
             m_ObjectAttached = null;
         }
         if(hasObject)
             UpdateAttachedObject();
+    }
+
+
+    private void releaseObject()
+    {
+        if (m_ObjectAttached.gameObject.CompareTag("Cube"))
+        {
+            companionCube cc = m_ObjectAttached.gameObject.GetComponent<companionCube>();
+            cc.setAttached(false);
+        }
+        else if (m_ObjectAttached.gameObject.CompareTag("Enemy"))
+        {
+            turret turret = m_ObjectAttached.gameObject.GetComponent<turret>();
+            turret.setAttached(false);
+        }
+
+        Debug.Log("Object attached is false");
     }
 
     void UpdateAttachedObject()
@@ -88,17 +107,36 @@ public class AttachObject : MonoBehaviour
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 10.0f))
+        if (Physics.Raycast(ray, out hit, 15.0f))
         {
             Rigidbody rb = hit.collider.GetComponent<Rigidbody>();
-            if (rb != null && (rb.gameObject.CompareTag("Cube") || rb.gameObject.CompareTag("Enemy")))
+            attachable attachable = hit.collider.GetComponent<attachable>();
+
+            if (rb != null && attachable != null)
             {
                 m_ObjectAttached = rb;
-                m_AttachingObjectStartRotation=m_ObjectAttached.rotation;
+
+                if (m_ObjectAttached.gameObject.CompareTag("Cube")){
+                    companionCube cc = m_ObjectAttached.gameObject.GetComponent<companionCube>();
+                    cc.setAttached(true);
+                }
+                else if (m_ObjectAttached.gameObject.CompareTag("Enemy")){
+                    turret turret = m_ObjectAttached.gameObject.GetComponent<turret>();
+                    turret.setAttached(true);
+                }
+                Debug.Log("Object attached is true");
+
+                m_AttachingObjectStartRotation = m_ObjectAttached.rotation;
                 return true;
             }
         }
         return false;
     }
+
+    public bool itHasObject()
+    {
+        return hasObject;
+    }
+
 }
 

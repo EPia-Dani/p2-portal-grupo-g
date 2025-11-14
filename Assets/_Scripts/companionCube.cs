@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class companionCube : MonoBehaviour, TeleportableObject
+public class companionCube : MonoBehaviour, TeleportableObject, attachable
 {
+    bool attached = false;
+
     void Start()
     {
         
@@ -10,5 +12,15 @@ public class companionCube : MonoBehaviour, TeleportableObject
     void Update()
     {
         
+    }
+
+    public void setAttached(bool attached)
+    {
+        this.attached = attached;
+    }
+
+    public bool isAttached()
+    {
+        return attached;
     }
 }
