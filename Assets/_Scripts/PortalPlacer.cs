@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PortalPlacer : MonoBehaviour
 {
+    public static event System.Action<PortalType> OnCrosshairChange;
     //public Crosshair mCrosshair;
     //list of 4 mcrosshair scripts
     //public Crosshair[] mCrosshairs = new Crosshair[4];
@@ -18,11 +19,12 @@ public class PortalPlacer : MonoBehaviour
     private Portal portalBlue;
 
     [System.Flags]
-    private enum PortalType
+    public enum PortalType
     {
-        None = 0,
-        Blue = 1,
-        Orange = 2
+        None   = 0,
+        Blue   = 1,
+        Orange = 2,
+        Both   = Blue | Orange   // = 3
     }
 
     private PortalType mOpenPortal = PortalType.None; //00 None, 01 Blue, 10 Orange, 11 Both
@@ -296,6 +298,8 @@ public class PortalPlacer : MonoBehaviour
             if (PlacePortal(GetPortal(portal), hit.collider, hit.point, portalRotation))
             {
                 mOpenPortal |= portal; //mOpenPortal |= PortalType.Blue; // 00 | 01 = 01. si afegim el taronja, 01 | 10 = 11
+                OnCrosshairChange?.Invoke(mOpenPortal);
+                Debug.Log("Invoking OnCrosshairChange with: " + mOpenPortal);
                 Portal portalScript = GetPortal(portal).GetComponent<Portal>();
                 portalScript.SetScale(portalScale);
                 portalScale = 1f;

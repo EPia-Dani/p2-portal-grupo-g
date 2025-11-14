@@ -6,7 +6,8 @@ public class Lava : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Lava touched");
+            other.GetComponent<PlayerHealth>().die();
+            Debug.Log("Player died by lava");
         }
     }
 }
