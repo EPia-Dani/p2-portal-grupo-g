@@ -42,7 +42,7 @@ public class ThirdPersonController : MonoBehaviour, TeleportableObject
 
     private float currentPitch = 0;
     private float currentYaw = 0;
-    private float gravity = -20f;
+    //private float gravity = -20f;
 
     private Animator m_Animator;
 
@@ -98,7 +98,7 @@ public class ThirdPersonController : MonoBehaviour, TeleportableObject
 
         // JUMP
         //MRUA: y = y0 + v0*t + 0.5*a*t^2    (Physics.gravity millor que posar -9.81)
-        mVerticalSpeed += gravity * Time.deltaTime; //la velocitat amb el temps decreix i amb el temps arriba a ser 0 (i podria ser negativa)
+        mVerticalSpeed += Physics.gravity.y * 2 * Time.deltaTime; //la velocitat amb el temps decreix i amb el temps arriba a ser 0 (i podria ser negativa)
         Vector3 verticalMovement = Vector3.up * mVerticalSpeed * Time.deltaTime;
         CollisionFlags collisionFlags = _mCharacterController.Move(verticalMovement);
 

@@ -106,6 +106,10 @@ public class Portal : MonoBehaviour
     {
         ThirdPersonController fpc = player.GetComponent<ThirdPersonController>();
         CharacterController cc = player.GetComponent<CharacterController>();
+        
+        Rigidbody rb = player.GetComponent<Rigidbody>();
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true;
 
         Transform MPitchController = player.transform.Find("PitchController");
 
@@ -133,6 +137,9 @@ public class Portal : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(0, fpc.getYaw(), 0);
         MPitchController.localRotation = Quaternion.Euler(fpc.getPitch(), 0, 0);
 
+
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
         fpc.enabled = true;
         cc.enabled = true; //enable character controller again
     }
