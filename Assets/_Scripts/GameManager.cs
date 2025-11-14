@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        StartCoroutine(ReloadGameScene());
     }
 
     private void OnEnable()
@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
 
     private void HandlePlayerWin()
     {
-        //show game won canvas and after 5 seconds, show menu to play or exit
         StartCoroutine(ShowGameWonMenu());
     }
 
