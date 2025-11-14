@@ -341,7 +341,7 @@ PrefabInstance:
     - target: {fileID: 891010911399073349, guid: 3abbaaf88d4ff264d917d67e7c322e01,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -37
+      value: -87
       objectReference: {fileID: 0}
     - target: {fileID: 891010911399073349, guid: 3abbaaf88d4ff264d917d67e7c322e01,
         type: 3}
@@ -387,6 +387,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DieTurretPS
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968037486072406770, guid: 3abbaaf88d4ff264d917d67e7c322e01,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968037486072406770, guid: 3abbaaf88d4ff264d917d67e7c322e01,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968037486072406770, guid: 3abbaaf88d4ff264d917d67e7c322e01,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968037486072406770, guid: 3abbaaf88d4ff264d917d67e7c322e01,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

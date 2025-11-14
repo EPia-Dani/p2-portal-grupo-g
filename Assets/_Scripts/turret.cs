@@ -45,7 +45,9 @@ public class turret : MonoBehaviour
                         hitPlayer(hit.collider.gameObject);
                         break;
                     case "Enemy":
-                        hitTurret(hit.collider.gameObject);
+                        GameObject go = hit.collider.gameObject;
+                        turret turret = go.GetComponent<turret>();
+                        turret.die();
                         break;
                 }
             }
@@ -96,18 +98,27 @@ public class turret : MonoBehaviour
         }
     }
 
-    private void hitTurret(GameObject go)
+    private IEnumerator playParticleSystem ()
     {
-        turret turret = go.GetComponent<turret>();
-        turret.die();
+        diePS.Play();
+        yield return null;
     }
 
     private void die()
     {
+        if (isActive == false)
+        {
+            return;
+        }
+
+        diePS.Play();
+
         isActive = false;
-        //diePS.Play();
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        Destroy(gameObject, 0.7f);
+
+        //StartCoroutine(playParticleSystem());
+
+        //Destroy(gameObject, 2f);
         Debug.Log("turret is dead");
     }
 
