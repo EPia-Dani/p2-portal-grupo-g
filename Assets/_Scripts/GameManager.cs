@@ -16,10 +16,12 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         PlayerHealth.OnPlayerDeath += HandlePlayerDeath;
+        PlayerWin.OnPlayerWin += HandlePlayerWin;
     }
     private void OnDisable()
     {
         PlayerHealth.OnPlayerDeath -= HandlePlayerDeath;
+        PlayerWin.OnPlayerWin -= HandlePlayerWin;
     }
 
     public void StartGame()
@@ -37,9 +39,22 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = 1f;
     }
 
+    private void HandlePlayerWin()
+    {
+        //show game won canvas and after 5 seconds, show menu to play or exit
+        StartCoroutine(ShowGameWonMenu());
+    }
+
+    private System.Collections.IEnumerator ShowGameWonMenu()
+    {
+        gameWonCanvas.SetActive(true);
+        yield return new WaitForSecondsRealtime(4f);
+        gameWonCanvas.SetActive(false);
+        Retry();
+    }
+
     private void HandlePlayerDeath()
     {
-        //game over and after 5 seconds, show menu to play or exit
         StartCoroutine(ShowGameOverMenu());
     }
 
