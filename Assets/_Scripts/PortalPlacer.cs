@@ -298,6 +298,7 @@ public class PortalPlacer : MonoBehaviour
             if (PlacePortal(GetPortal(portal), hit.collider, hit.point, portalRotation))
             {
                 mOpenPortal |= portal; //mOpenPortal |= PortalType.Blue; // 00 | 01 = 01. si afegim el taronja, 01 | 10 = 11
+                
                 OnCrosshairChange?.Invoke(mOpenPortal);
                 Debug.Log("Invoking OnCrosshairChange with: " + mOpenPortal);
                 Portal portalScript = GetPortal(portal).GetComponent<Portal>();

@@ -12,9 +12,20 @@ public class Portal : MonoBehaviour
 
     private float portalSize = 1.0f;
 
-    
+    private bool canTp = false;
     private bool canTpPlayer = true;
     private bool canTpCube = true;
+
+
+    void OnEnable()
+    {
+        PortalPlacer.OnCrosshairChange += HandleCrosshairChange;
+    }
+
+    void OnDisable()
+    {
+        PortalPlacer.OnCrosshairChange -= HandleCrosshairChange;
+    }
 
     void Start()
     {
@@ -41,7 +52,7 @@ public class Portal : MonoBehaviour
         TeleportableObject teleportable = other.GetComponent<TeleportableObject>();
         if (teleportable != null) //si es teleportable
         {
-            if (mirrorPortal != null) //si el otro portal existe
+            if (canTp)
             {
                 switch (other.tag)
                 {
@@ -75,7 +86,6 @@ public class Portal : MonoBehaviour
         rb.isKinematic = true;
 
         Vector3 l_Velocity = transform.InverseTransformDirection(rb.linearVelocity);
-
 
         Vector3 enterPosition = transform.InverseTransformPoint(cube.transform.position);
         Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
@@ -156,7 +166,7 @@ public class Portal : MonoBehaviour
 
         teleportPlayer(player);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         canTpPlayer = true;
         mirrorPortal.canTpPlayer = true;
         //rb.isKinematic = false;
@@ -166,6 +176,27 @@ public class Portal : MonoBehaviour
     {
         portalSize = scale;
         transform.localScale = Vector3.one * portalSize;
+    }
+
+
+    private void HandleCrosshairChange(PortalPlacer.PortalType type)
+    {
+        //Debug.Log("Crosshair changed to: " + type);
+        switch (type)
+        {
+            case PortalPlacer.PortalType.None:
+                canTp = false;
+                break;
+            case PortalPlacer.PortalType.Blue:
+                canTp = false;
+                break;
+            case PortalPlacer.PortalType.Orange:
+                canTp = false;
+                break;
+            case PortalPlacer.PortalType.Both:
+                canTp = true;
+                break;
+        }
     }
 
 

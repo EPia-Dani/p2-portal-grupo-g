@@ -1,5 +1,6 @@
-using Unity.VisualScripting;
+using NUnit.Framework;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class turret : MonoBehaviour
@@ -13,9 +14,12 @@ public class turret : MonoBehaviour
     private Vector3 turretPos;
     private Vector3 turretForward;
 
+    private ParticleSystem diePS;
+
     void Start()
     {
         setLineRenderer(lineRenderer);
+        diePS = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -37,11 +41,10 @@ public class turret : MonoBehaviour
                 switch (hit.collider.tag)
                 {
                     case "Player":
-                        Debug.Log("Hit player");
+                        //Debug.Log("Hit player");
                         hitPlayer(hit.collider.gameObject);
                         break;
                     case "Enemy":
-                        Debug.Log("Hit turret");
                         hitTurret(hit.collider.gameObject);
                         break;
                 }
@@ -96,16 +99,13 @@ public class turret : MonoBehaviour
     private void hitTurret(GameObject go)
     {
         turret turret = go.GetComponent<turret>();
-
-        if (turret.isActive)
-        {
-            turret.die();
-        }
+        turret.die();
     }
 
     private void die()
     {
         isActive = false;
+        //diePS.Play();
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         Destroy(gameObject, 0.7f);
         Debug.Log("turret is dead");
