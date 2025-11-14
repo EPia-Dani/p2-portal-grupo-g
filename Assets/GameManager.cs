@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject gameWonCanvas;
@@ -45,26 +45,32 @@ public class GameManager : MonoBehaviour
 
     private System.Collections.IEnumerator ShowGameOverMenu()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
         gameOverCanvas.SetActive(true);
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(4f);
         gameOverCanvas.SetActive(false);
         Retry();
     }
 
     public void Retry()
     {
+        StartCoroutine(ReloadGameScene());
+    }
+
+    private IEnumerator ReloadGameScene()
+    {
+        if (SceneManager.GetSceneByName("Game").isLoaded)
+        {
+            yield return SceneManager.UnloadSceneAsync("Game");
+        }
+
+        yield return SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
+
         StartGame();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void QuitGame()
     {
         Application.Quit();
     }
-
-    public void TestButton()
-{
-    Debug.Log("Botó clicat!");
-}
 }
