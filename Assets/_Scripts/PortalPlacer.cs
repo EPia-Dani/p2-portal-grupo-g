@@ -246,14 +246,7 @@ public class PortalPlacer : MonoBehaviour
             bool isValidSurface = (mHitMask.value & (1 << hit.collider.gameObject.layer)) != 0;
             if (!isValidSurface)
             {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Portal"))
-                {
-                    //TODO. revisar si ja es mira a dalt
-                }
-                else
-                {
-                    return;
-                }
+                return;
             }
                 
 
