@@ -98,12 +98,6 @@ public class turret : MonoBehaviour
         }
     }
 
-    private IEnumerator playParticleSystem ()
-    {
-        diePS.Play();
-        yield return null;
-    }
-
     private void die()
     {
         if (isActive == false)
@@ -116,10 +110,8 @@ public class turret : MonoBehaviour
         isActive = false;
         transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
-        //StartCoroutine(playParticleSystem());
-
-        //Destroy(gameObject, 2f);
-        Debug.Log("turret is dead");
+        Destroy(gameObject, 2f);
+        //Debug.Log("turret is dead");
     }
 
 }
