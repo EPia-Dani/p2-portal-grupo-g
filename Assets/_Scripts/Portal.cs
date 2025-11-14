@@ -76,40 +76,47 @@ public class Portal : MonoBehaviour
 
     private IEnumerator teleportCube(GameObject cube)
     {
-        Debug.Log("Teleporting cube");
+        companionCube cc = cube.GetComponent<companionCube>();
 
-        canTpCube = false;
+        if (cc.isAttached())
+        {
+            Debug.Log("cannot tp cube");
+            yield return null;
+        }
+        else
+        {
+            Debug.Log("Teleporting cube");
 
-        Rigidbody rb = cube.GetComponent<Rigidbody>();
+            canTpCube = false;
+            mirrorPortal.canTpCube = false;
 
-        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-        rb.isKinematic = true;
+            Rigidbody rb = cube.GetComponent<Rigidbody>();
 
-        Vector3 l_Velocity = transform.InverseTransformDirection(rb.linearVelocity);
+            //rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+            Vector3 enterVelocity = rb.linearVelocity;
+            rb.isKinematic = true;
 
-        Vector3 enterPosition = transform.InverseTransformPoint(cube.transform.position);
-        Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
+            Vector3 enterPosition = transform.InverseTransformPoint(cube.transform.position);
+            Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
 
-        Vector3 enterDirection = transform.InverseTransformDirection(cube.transform.forward);
-        Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
+            Vector3 enterDirection = transform.InverseTransformDirection(cube.transform.forward);
+            Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
 
-        cube.transform.position = exitPosition;
-        cube.transform.forward = exitDirection;
-        cube.transform.position += mirrorPortal.transform.forward * -0.2f;
+            enterVelocity = transform.InverseTransformDirection(enterVelocity);
+            Vector3 exitVelocity = mirrorPortal.transform.TransformDirection(-enterVelocity);
 
-        /*
-         *  Solo permitiermos que se teletransporte cuando no lo estemos llevando, por lo que tendremos que comprobar esa condici�n
-         *  
-         *  mover e orientar el objeto igual que al player,
-         *  tendremos que modificarle la velocidad y la escala del objeto para orientarlo en la direcci�n del portal y para que le afecte el factor de escala entre los dos portales
-         * 
-         * Vector3 l_Velocity=_Portal.m_VirtualPortal.transform.InverseTransformDirection(l_Rigidbody.velocity);
-         * l_Rigidbody.velocity = _Portal.m_MirrorPortal.transform.TransformDirection(l_Velocity);
-         * transform.localScale *= (_Portal.m_MirrorPortal.transform.localScale.x/_Portal.transform.localScale.x);
-         */
+            cube.transform.position = exitPosition;
+            cube.transform.forward = exitDirection;
+            cube.transform.position += mirrorPortal.transform.forward * -0.2f;
+            cube.transform.localScale *= (mirrorPortal.transform.localScale.x / transform.localScale.x);
 
-        yield return new WaitForSeconds(1f);
-        canTpCube = true;
+            rb.isKinematic = false;
+            rb.linearVelocity = exitVelocity;
+
+            yield return new WaitForSeconds(0.5f);
+            canTpCube = true;
+            mirrorPortal.canTpCube = true;
+        }
     }
 
     private void teleportPlayer(GameObject player)
@@ -130,11 +137,11 @@ public class Portal : MonoBehaviour
         Vector3 enterPosition = transform.InverseTransformPoint(player.transform.position);
         Vector3 enterDirection = transform.InverseTransformDirection(player.transform.forward);
 
+        //and convert to the other portal
         Vector3 exitPosition = mirrorPortal.transform.TransformPoint(enterPosition);
         Vector3 exitDirection = mirrorPortal.transform.TransformDirection(-enterDirection);
 
-
-        //and convert to the other portal
+        
         player.transform.position = exitPosition;
         player.transform.forward = exitDirection;
         player.transform.position += mirrorPortal.transform.forward * -0.2f; //offset to not teleport infinetely
@@ -147,7 +154,6 @@ public class Portal : MonoBehaviour
         player.transform.rotation = Quaternion.Euler(0, fpc.getYaw(), 0);
         MPitchController.localRotation = Quaternion.Euler(fpc.getPitch(), 0, 0);
 
-
         //rb.isKinematic = false;
         //rb.linearVelocity = Vector3.zero;
         fpc.enabled = true;
@@ -158,18 +164,26 @@ public class Portal : MonoBehaviour
     {
         //Rigidbody rb = player.GetComponent<Rigidbody>();
 
-        canTpPlayer = false;
-        mirrorPortal.canTpPlayer = false;
+        AttachObject attachObject = player.GetComponent<AttachObject>();
+        if (attachObject.itHasObject())
+        {
+            yield return null;
+        }
+        else
+        {
+            canTpPlayer = false;
+            mirrorPortal.canTpPlayer = false;
 
-        //rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
-        //rb.isKinematic = true;
+            //rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+            //rb.isKinematic = true;
 
-        teleportPlayer(player);
+            teleportPlayer(player);
 
-        yield return new WaitForSeconds(0.5f);
-        canTpPlayer = true;
-        mirrorPortal.canTpPlayer = true;
-        //rb.isKinematic = false;
+            yield return new WaitForSeconds(0.5f);
+            canTpPlayer = true;
+            mirrorPortal.canTpPlayer = true;
+            //rb.isKinematic = false;
+        }
     }
 
     public void SetScale(float scale)

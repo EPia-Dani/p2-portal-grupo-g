@@ -3,13 +3,14 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class turret : MonoBehaviour
+public class turret : MonoBehaviour, attachable
 {
 
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private float maxDistance;
     [SerializeField] private float lineRendererWidth;
 
+    bool attached = false;
     private bool isActive = true;
     private Vector3 turretPos;
     private Vector3 turretForward;
@@ -86,6 +87,11 @@ public class turret : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.startColor = Color.red;
         lineRenderer.endColor = Color.red;
+    }
+
+    public void setAttached(bool attached)
+    {
+        this.attached = attached;
     }
 
     private void hitPlayer(GameObject go)
